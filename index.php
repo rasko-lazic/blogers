@@ -37,7 +37,3 @@ spl_autoload_register('autoload');
 
 $session = new Session();
 $router = new Router();
-
-$database = new \Core\Database();
-
-exit();

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
+use App\Controllers\BlogController;
 
 class Router {
 
@@ -29,6 +30,7 @@ class Router {
             'GET:/' => [HomeController::class, 'index'],
             'POST:/login' => [AuthController::class, 'login'],
             'GET:/logout' => [AuthController::class, 'logout'],
+            'GET:/blog' => [BlogController::class, 'create'],
         ];
     }
 

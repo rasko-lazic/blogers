@@ -4,13 +4,26 @@ namespace App\Controllers;
 
 use Core\Session;
 use App\Router;
+use App\Models\User;
 
 class AuthController {
 
+    /**
+     * @throws \Exception
+     */
     public function login(): void
     {
         // TODO auth here
-        Session::login(1);
+        $email = $_POST['email'] ?? null;
+        $password = $_POST['password'] ?? null;
+
+        if (is_null($email) || is_null($password)) {
+            throw new \Exception("Missing data");
+        }
+
+        $user = $this->authenticate($email, $password);
+
+        Session::login($user->id);
         Router::redirect('/');
     }
 
@@ -18,5 +31,25 @@ class AuthController {
     {
         Session::logout();
         Router::redirect('/');
+    }
+
+    /**
+     * @param $email
+     * @param $password
+     * @return User
+     * @throws \Exception
+     */
+    private function authenticate($email, $password): ?User
+    {
+        $user = User::select([
+            ['email', '=', $email],
+            ['password', '=', md5($password)],
+        ]);
+
+        if (is_null($user)) {
+            throw new \Exception('User not found');
+        }
+
+        return $user[0];
     }
 }
