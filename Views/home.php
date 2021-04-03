@@ -135,9 +135,9 @@
             <div class="navbar-item">
                 <div class="buttons">
                     <?php
-                    if (\core\Session::check()) {
+                    if (\Core\Session::check()) {
                         echo '
-                            <a id="register-button" class="button sign-up">
+                            <a class="button sign-up" href="/logout">
                                 <strong>Logout</strong>
                             </a>
                         ';
@@ -261,7 +261,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -280,7 +280,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -299,7 +299,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -318,7 +318,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -337,7 +337,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -356,7 +356,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -375,7 +375,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -394,7 +394,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -413,7 +413,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -432,7 +432,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -451,7 +451,7 @@
                     </p>
                     <div class="is-flex is-justify-content-space-between">
                         <p class="is-size-7">26.03.2021</p>
-                        <span class="material-icons-outlined">bookmark_border</span>
+                        <span class="material-icons-outlined is-clickable">bookmark_border</span>
                     </div>
                 </div>
                 <figure class="image ml-6">
@@ -462,15 +462,15 @@
         <div class="column categories">
             <p class="mb-4 has-text-weight-bold is-uppercase">Otkrijte šta vas interesuje</p>
             <div class="tags are-medium mb-5">
-                <span class="tag">Veze</span>
-                <span class="tag">Produktivnost</span>
-                <span class="tag">Politika</span>
-                <span class="tag">Poznati</span>
-                <span class="tag">Zdravlje</span>
-                <span class="tag">Programiranje</span>
-                <span class="tag">Meditacija</span>
-                <span class="tag">Moda</span>
-                <span class="tag">Veštačka inteligencija</span>
+                <span class="tag is-clickable">Veze</span>
+                <span class="tag is-clickable">Produktivnost</span>
+                <span class="tag is-clickable">Politika</span>
+                <span class="tag is-clickable">Poznati</span>
+                <span class="tag is-clickable">Zdravlje</span>
+                <span class="tag is-clickable">Programiranje</span>
+                <span class="tag is-clickable">Meditacija</span>
+                <span class="tag is-clickable">Moda</span>
+                <span class="tag is-clickable">Veštačka inteligencija</span>
             </div>
         </div>
     </div>
@@ -483,7 +483,7 @@
             <p class="modal-card-title has-text-centered">Dobrodošli nazad</p>
         </header>
         <section class="modal-card-body py-6">
-            <form id="login-form" method="post" action="login.php">
+            <form id="login-form" method="post" action="/login">
                 <div class="field">
                     <p class="control has-icons-left has-icons-right">
                         <input class="input" type="email" placeholder="Email" name="email">

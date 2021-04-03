@@ -1,6 +1,8 @@
 <?php
 
-class Home {
+namespace App\Controllers;
+
+class HomeController {
 
     public function index(): void
     {

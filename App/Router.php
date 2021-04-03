@@ -1,8 +1,13 @@
 <?php
 
-namespace app;
+namespace App;
+
+use App\Controllers\HomeController;
+use App\Controllers\AuthController;
 
 class Router {
+
+    private const BASE_URL = 'https://blogers.rasko-dev.website';
 
     private $url;
 
@@ -21,8 +26,9 @@ class Router {
     private static function getRoutes(): array
     {
         return [
-            'GET:/' => 'Home@index',
-            'POST:/login' => 'AuthController@login',
+            'GET:/' => [HomeController::class, 'index'],
+            'POST:/login' => [AuthController::class, 'login'],
+            'GET:/logout' => [AuthController::class, 'logout'],
         ];
     }
 
@@ -34,11 +40,17 @@ class Router {
             throw new \InvalidArgumentException('Route not found', 404);
         }
 
-        [$controller, $method] = explode('@', $route);
+        [$controller, $method] = $route;
         $controller = new $controller();
         if (method_exists($controller, $method)) {
             $controller->$method();
         }
 
+    }
+
+
+    public static function redirect($path)
+    {
+        header('Location: ' . self::BASE_URL . $path);
     }
 }

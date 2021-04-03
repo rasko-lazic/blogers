@@ -1,6 +1,6 @@
 <?php
 
-namespace core;
+namespace Core;
 
 class Session {
 
@@ -20,7 +20,7 @@ class Session {
         $_SESSION['userId'] = $userId;
     }
 
-    public function logout(): void
+    public static function logout(): void
     {
         session_unset();
         session_destroy();
