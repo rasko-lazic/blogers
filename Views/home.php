@@ -469,87 +469,87 @@
                 <span class="tag is-clickable">Zdravlje</span>
                 <span class="tag is-clickable">Programiranje</span>
                 <span class="tag is-clickable">Meditacija</span>
-                <span class="tag is-clickable">Moda</span>
-                <span class="tag is-clickable">Veštačka inteligencija</span>
+              <span class="tag is-clickable">Moda</span>
+              <span class="tag is-clickable">Veštačka inteligencija</span>
             </div>
         </div>
     </div>
 </section>
 <div class="login-modal modal" id="login-modal">
-    <div id="login-modal-background" class="modal-background"></div>
-    <button id="login-modal-close" class="modal-close is-large" aria-label="close"></button>
-    <div class="modal-card">
-        <header class="modal-card-head py-6">
-            <p class="modal-card-title has-text-centered">Dobrodošli nazad</p>
-        </header>
-        <section class="modal-card-body py-6">
-            <form id="login-form" method="post" action="/login">
-                <div class="field">
-                    <p class="control has-icons-left has-icons-right">
-                        <input class="input" type="email" placeholder="Email" name="email">
-                        <span class="icon is-small is-left">
-            <i class="material-icons-outlined">mail_outline</i>
-          </span>
-                        <span class="icon is-small is-right">
-            <i class="material-icons-outlined">done</i>
-          </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <p class="control has-icons-left">
-                        <input class="input" type="password" placeholder="Šifra" name="password">
-                        <span class="icon is-small is-left">
-            <i class="material-icons-outlined">lock</i>
-          </span>
-                    </p>
-                </div>
-            </form>
-        </section>
-        <footer class="modal-card-foot is-block">
-            <button class="button is-success is-fullwidth" type="submit" form="login-form">
-                Uloguj me
-            </button>
-            <p class="has-text-centered mt-5">Nemate nalog?
-                <a id="register-redirect" style="color: #f59425">Napravite ga</a>
-            </p>
-        </footer>
-    </div>
+  <div id="login-modal-background" class="modal-background"></div>
+  <button id="login-modal-close" class="modal-close is-large" aria-label="close"></button>
+  <div class="modal-card">
+    <header class="modal-card-head py-6">
+      <p class="modal-card-title has-text-centered">Dobrodošli nazad</p>
+    </header>
+    <section class="modal-card-body py-6">
+      <form id="login-form" method="post" action="/login">
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="email" placeholder="Email" name="email">
+            <span class="icon is-small is-left">
+              <i class="material-icons-outlined">mail_outline</i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="material-icons-outlined">done</i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="password" placeholder="Šifra" name="password">
+            <span class="icon is-small is-left">
+              <i class="material-icons-outlined">lock</i>
+            </span>
+          </p>
+        </div>
+      </form>
+    </section>
+    <footer class="modal-card-foot is-block">
+      <button class="button is-success is-fullwidth" type="submit" form="login-form">
+        Uloguj me
+      </button>
+      <p class="has-text-centered mt-5">Nemate nalog?
+        <a id="register-redirect" style="color: #f59425">Napravite ga</a>
+      </p>
+    </footer>
+  </div>
 </div>
 
 <div id="register-modal" class="login-modal modal">
-    <div id="register-modal-background" class="modal-background"></div>
-    <button id="register-modal-close" class="modal-close is-large" aria-label="close"></button>
-    <div class="modal-card">
-        <header class="modal-card-head py-6">
-            <p class="modal-card-title has-text-centered">Napravite nalog</p>
-        </header>
-        <section class="modal-card-body py-6">
-            <div class="field">
-                <p class="control has-icons-left has-icons-right">
-                    <input class="input" type="email" placeholder="Email">
-                    <span class="icon is-small is-left">
+  <div id="register-modal-background" class="modal-background"></div>
+  <button id="register-modal-close" class="modal-close is-large" aria-label="close"></button>
+  <div class="modal-card">
+    <header class="modal-card-head py-6">
+      <p class="modal-card-title has-text-centered">Napravite nalog</p>
+    </header>
+    <section class="modal-card-body py-6">
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          <input class="input" type="email" placeholder="Email">
+          <span class="icon is-small is-left">
             <i class="material-icons-outlined">mail_outline</i>
           </span>
-                    <span class="icon is-small is-right">
+          <span class="icon is-small is-right">
             <i class="material-icons-outlined">done</i>
           </span>
-                </p>
-            </div>
-            <div class="field">
-                <p class="control has-icons-left">
-                    <input class="input" type="password" placeholder="Password">
-                    <span class="icon is-small is-left">
+        </p>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <input class="input" type="password" placeholder="Password">
+          <span class="icon is-small is-left">
             <i class="material-icons-outlined">lock</i>
           </span>
-                </p>
-            </div>
-        </section>
-        <footer class="modal-card-foot is-block">
-            <button class="button is-success is-fullwidth">
-                Register
-            </button>
-        </footer>
-    </div>
+        </p>
+      </div>
+    </section>
+    <footer class="modal-card-foot is-block">
+      <button class="button is-success is-fullwidth">
+        Register
+      </button>
+    </footer>
+  </div>
 </div>
 </body>
 

@@ -31,6 +31,7 @@ class Router {
             'POST:/login' => [AuthController::class, 'login'],
             'GET:/logout' => [AuthController::class, 'logout'],
             'GET:/blog' => [BlogController::class, 'create'],
+            'POST:/blog' => [BlogController::class, 'store'],
         ];
     }
 

@@ -46,7 +46,7 @@ class AuthController {
             ['password', '=', md5($password)],
         ]);
 
-        if (is_null($user)) {
+        if (empty($user)) {
             throw new \Exception('User not found');
         }
 

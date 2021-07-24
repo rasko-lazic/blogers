@@ -119,7 +119,7 @@
 <body>
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="index.html">
+    <a class="navbar-item" href="/">
       <img class="mr-2" src="assets/image/logo.png" height="28" width="28" alt="brand logo">
       <span class="is-size-4">BLOGE<span style="color: #f59425">.rs</span></span>
     </a>
@@ -165,10 +165,11 @@
 <section class="section">
   <div class="container">
 
-    <div class="file is-boxed is-centered mb-6">
-      <label class="file-label">
-        <input class="file-input" type="file" name="resume">
-        <span class="file-cta">
+    <form id="login-form" method="post" action="/blog">
+      <div class="file is-boxed is-centered mb-6">
+        <label class="file-label">
+          <input class="file-input" type="file" name="resume">
+          <span class="file-cta">
           <span class="file-icon">
             <span class="material-icons-outlined">photo_camera</span>
           </span>
@@ -176,9 +177,11 @@
             Izaberite logo
           </span>
         </span>
-      </label>
-    </div>
-    <input class="input is-large" type="text" placeholder="Naziv bloga" />
+        </label>
+      </div>
+      <input class="input is-large" type="text" name="name" placeholder="Naziv bloga" />
+      <button class="button is-medium is-fullwidth is-primary mt-4">Napravi blog</button>
+    </form>
 
   </div>
 </section>
