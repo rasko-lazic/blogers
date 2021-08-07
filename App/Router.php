@@ -30,25 +30,36 @@ class Router {
             'GET:/' => [HomeController::class, 'index'],
             'POST:/login' => [AuthController::class, 'login'],
             'GET:/logout' => [AuthController::class, 'logout'],
-            'GET:/blog' => [BlogController::class, 'create'],
-            'POST:/blog' => [BlogController::class, 'store'],
+            'GET:/blogs' => [BlogController::class, 'index'],
+            'GET:/blogs/?' => [BlogController::class, 'show'],
+            'POST:/blogs' => [BlogController::class, 'store'],
         ];
     }
 
     private function redirectToController(): void
     {
         try {
-            $route = self::getRoutes()["{$this->method}:{$this->url}"];
+            $action = self::getRoutes()["{$this->method}:{$this->url}"];
         } catch (\Exception $e) {
+            foreach (self::getRoutes() as $route => $action) {
+                if (fnmatch($route, "{$this->method}:{$this->url}")) {
+                    $this->goToAction($action);
+                    return;
+                }
+            }
             throw new \InvalidArgumentException('Route not found', 404);
         }
 
-        [$controller, $method] = $route;
+        $this->goToAction($action);
+    }
+
+    private function goToAction(array $action): void
+    {
+        [$controller, $method] = $action;
         $controller = new $controller();
         if (method_exists($controller, $method)) {
             $controller->$method();
         }
-
     }
 
 

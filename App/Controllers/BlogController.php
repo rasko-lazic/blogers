@@ -7,9 +7,14 @@ use Core\Session;
 
 class BlogController {
 
-    public function create(): void
+    public function index(): void
     {
-        include('./Views/Blog.php');
+        include('./Views/IndexBlogs.php');
+    }
+
+    public function show(): void
+    {
+        include('./Views/ShowBlog.php');
     }
 
     public function store(): void

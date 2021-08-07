@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bloger</title>
-    <link rel="shortcut icon" type="image/png" href="assets/image/logo.png"/>
+    <link rel="shortcut icon" type="image/png" href="/assets/image/logo.png"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -116,7 +116,7 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="index.html">
-            <img class="mr-2" src="assets/image/logo.png" height="28" width="28" alt="brand logo">
+            <img class="mr-2" src="/assets/image/logo.png" height="28" width="28" alt="brand logo">
             <span class="is-size-4">BLOGE<span style="color: #f59425">.rs</span></span>
         </a>
 
@@ -137,6 +137,9 @@
                     <?php
                     if (\Core\Session::check()) {
                         echo '
+                            <a class="button" href="/blogs">
+                                <strong>Moji blogovi</strong>
+                            </a>
                             <a class="button sign-up" href="/logout">
                                 <strong>Logout</strong>
                             </a>

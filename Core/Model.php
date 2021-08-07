@@ -50,12 +50,14 @@ class Model {
 
     public static function select($conditions): array
     {
-        $conditionStrings = array_map(function ($c) {
-            return "{$c[0]} {$c[1]} ?";
-        }, $conditions);
+        $table = (new static)->table;
+        $conditionString = join(
+            ' AND ',
+            array_map(function ($c) {return "{$c[0]} {$c[1]} ?";}, $conditions)
+        );
 
         return (new static)->runQuery(
-            'SELECT * FROM ' . self::$table .  ' WHERE ' . join(' AND ', $conditionStrings),
+            "SELECT * FROM $table WHERE $conditionString",
             array_column($conditions, 2)
         );
     }

@@ -6,29 +6,27 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Bloger</title>
-  <link rel="shortcut icon" type="image/png" href="assets/image/logo.png"/>
+  <link rel="shortcut icon" type="image/png" href="/assets/image/logo.png"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@creativebulma/bulma-tagsinput@1.0.3/dist/css/bulma-tagsinput.min.css">
   <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@creativebulma/bulma-tagsinput@1.0.3/dist/js/bulma-tagsinput.min.js"></script>
   <style>
     body, button, input, optgroup, select, textarea {
       font-family: 'Lexend', 'Segoe UI',Roboto,'Fira Sans',Helvetica,Arial,sans-serif;
     }
 
     .navbar {
-      background: #5533ff;
-      background: linear-gradient(60deg, #5533ff 40%, #25ddf5 100%);
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
     }
     .navbar-item {
-      color: white;
-    }
-    .navbar-item:hover {
-      color: white !important;
+      color: #5533ff;
     }
     .sign-up {
       background: #f59425;
@@ -112,7 +110,24 @@
     }
 
     .file-cta {
-      padding: 4em 3em !important;
+      padding: 2.2em 0.4em !important;
+    }
+
+    .blog-line {
+        display: flex;
+        align-items: center;
+        min-height: 100px;
+        padding: 2em 4em;
+        border-bottom: 1px solid #e6e6e6;
+    }
+
+    .blog-line__logo {
+        margin-right: 2em;
+        border-radius: 2em;
+    }
+
+    .c-inherit {
+        color: inherit;
     }
   </style>
 </head>
@@ -120,7 +135,7 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img class="mr-2" src="assets/image/logo.png" height="28" width="28" alt="brand logo">
+      <img class="mr-2" src="/assets/image/logo.png" height="28" width="28" alt="brand logo">
       <span class="is-size-4">BLOGE<span style="color: #f59425">.rs</span></span>
     </a>
 
@@ -164,12 +179,25 @@
 
 <section class="section">
   <div class="container">
+    <div id="new-blog-button" class="py-4 has-text-centered">
+      <span class="material-icons-outlined is-size-2 is-clickable">add_circle_outline</span>
+    </div>
+  </div>
+</section>
 
-    <form id="login-form" method="post" action="/blog">
-      <div class="file is-boxed is-centered mb-6">
-        <label class="file-label">
-          <input class="file-input" type="file" name="resume">
-          <span class="file-cta">
+<div id="new-blog-modal" class="modal">
+  <div id="new-blog-modal-background" class="modal-background"></div>
+  <button id="new-blog-modal-close" class="modal-close is-large" aria-label="close"></button>
+  <div class="modal-card">
+    <header class="modal-card-head py-6">
+      <p class="modal-card-title has-text-centered">Novi blog</p>
+    </header>
+    <section class="modal-card-body py-6">
+      <form id="login-form" method="post" action="/blog">
+        <div class="file is-boxed is-centered mb-4">
+          <label class="file-label">
+            <input class="file-input" type="file" name="resume">
+            <span class="file-cta">
           <span class="file-icon">
             <span class="material-icons-outlined">photo_camera</span>
           </span>
@@ -177,19 +205,45 @@
             Izaberite logo
           </span>
         </span>
-        </label>
-      </div>
-      <input class="input is-large" type="text" name="name" placeholder="Naziv bloga" />
-      <button class="button is-medium is-fullwidth is-primary mt-4">Napravi blog</button>
-    </form>
-
+          </label>
+        </div>
+        <div class="field">
+          <div class="control">
+            <input class="input is-large" type="text" name="name" placeholder="Naziv bloga" />
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <textarea class="textarea has-fixed-size" placeholder="Opis bloga"></textarea>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <input class="input" type="text" data-type="tags" placeholder="Tagovi">
+          </div>
+        </div>
+        <button class="button is-medium is-fullwidth is-primary mt-4">Napravi blog</button>
+      </form>
+    </section>
   </div>
-</section>
+</div>
 
 </body>
 
 <script>
+  const closeNewModalBlog = () => {
+    $("#new-blog-modal").removeClass("is-active");
+  };
 
+  $(document).ready(() => {
+    BulmaTagsInput.attach();
+    // Register modal triggers
+    $("#new-blog-button").click(() => {
+      $("#new-blog-modal").addClass("is-active");
+    });
+    $("#new-blog-modal-background").click(closeNewModalBlog);
+    $("#new-blog-modal-close").click(closeNewModalBlog);
+  });
 </script>
 
 </html>
