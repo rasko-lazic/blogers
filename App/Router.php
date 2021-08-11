@@ -5,6 +5,7 @@ namespace App;
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
 use App\Controllers\BlogController;
+use App\Controllers\PostController;
 
 class Router {
 
@@ -33,6 +34,7 @@ class Router {
             'GET:/blogs' => [BlogController::class, 'index'],
             'GET:/blogs/?' => [BlogController::class, 'show'],
             'POST:/blogs' => [BlogController::class, 'store'],
+            'GET:/blogs/?/posts' => [PostController::class, 'create'],
         ];
     }
 

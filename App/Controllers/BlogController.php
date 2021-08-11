@@ -9,12 +9,12 @@ class BlogController {
 
     public function index(): void
     {
-        include('./Views/IndexBlogs.php');
+        include('./Views/Blog/Index.php');
     }
 
     public function show(): void
     {
-        include('./Views/ShowBlog.php');
+        include('./Views/Blog/Show.php');
     }
 
     public function store(): void

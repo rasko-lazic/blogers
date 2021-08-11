@@ -114,7 +114,9 @@
   <div class="container">
     <h1 class="title is-flex is-justify-content-space-between">
       Tvoje priče
-      <button class="button is-success is-rounded is-outlined">Napiši priču</button>
+      <a class="button is-success is-rounded is-outlined" href="/blogs/5/posts">
+        Napiši priču
+      </a>
     </h1>
     <div class="tabs is-large">
       <ul>
