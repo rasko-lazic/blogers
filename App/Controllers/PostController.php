@@ -15,15 +15,23 @@ class PostController {
         include('./Views/Post/Create.php');
     }
 
+    /**
+     * @throws \Exception
+     */
     public function store(): void
     {
-        $entity = Entity::create([]);
+        // Let's strip any newline characters from the title
+        $title = preg_replace('/\s+/', ' ', trim($_POST['title']));
 
+        $entity = Entity::create([]);
         Post::create([
             'id' => $entity,
             'blog_id' => 1,
             'user_id' => Session::getUserId(),
-            'title' => $_POST['title'],
+            // In order to guarantee a unique slug, we add 10 random chars after the title
+            'slug' => str_replace(' ', '-', strtolower($title))
+                . '-' . bin2hex(random_bytes(5)),
+            'title' => $title,
             'text' => $_POST['content'],
             'html_text' => (new Parsedown)->text($_POST['content']),
         ]);
