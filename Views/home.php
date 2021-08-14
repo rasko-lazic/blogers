@@ -486,7 +486,7 @@
       <p class="modal-card-title has-text-centered">Dobrodošli nazad</p>
     </header>
     <section class="modal-card-body py-6">
-      <form id="login-form" method="post" action="/login">
+      <form id="login-form" method="POST" action="/login">
         <div class="field">
           <p class="control has-icons-left has-icons-right">
             <input class="input" type="email" placeholder="Email" name="email">

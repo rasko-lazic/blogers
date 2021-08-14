@@ -35,6 +35,7 @@ class Router {
             'GET:/blogs/?' => [BlogController::class, 'show'],
             'POST:/blogs' => [BlogController::class, 'store'],
             'GET:/blogs/?/posts' => [PostController::class, 'create'],
+            'POST:/blogs/?/posts' => [PostController::class, 'store'],
         ];
     }
 

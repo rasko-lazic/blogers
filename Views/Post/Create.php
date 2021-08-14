@@ -181,17 +181,17 @@
       </span>
     </div>
     <div>
-      <button class="button is-info is-rounded is-outlined mr-2" type="submit">
+      <button class="button is-info is-rounded is-outlined mr-2" type="submit" form="post-form">
         Sačuvaj nacrt
       </button>
-      <button class="button is-success is-rounded is-outlined" type="submit">
+      <button class="button is-success is-rounded is-outlined" type="submit" form="post-form">
         Objavi
       </button>
     </div>
   </div>
   <div class="container">
     <section class="section">
-      <form class="post-form" id="post-form">
+      <form class="post-form" id="post-form" method="POST" action="/blogs/1/posts">
         <div class="field is-horizontal">
 <!--          <div class="field-label is-large">-->
 <!--            <label class="label" for="title">Naslov</label>-->

@@ -23,7 +23,7 @@ class Model {
 
         // If query found no rows, convert it to null
         if ($rows == false) {
-            $rows = null;
+            $rows = [];
         } else {
             $rows = $this->formatDatabaseData($rows);
         }

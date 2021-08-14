@@ -232,7 +232,7 @@
       <p class="modal-card-title has-text-centered">Novi blog</p>
     </header>
     <section class="modal-card-body py-6">
-      <form id="login-form" method="post" action="/blog">
+      <form id="login-form" method="POST" action="/blog">
         <div class="file is-boxed is-centered mb-4">
           <label class="file-label">
             <input class="file-input" type="file" name="resume">
