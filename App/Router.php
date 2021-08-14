@@ -29,6 +29,7 @@ class Router {
     {
         return [
             'GET:/' => [HomeController::class, 'index'],
+            'GET:/?' => [PostController::class, 'show'],
             'POST:/login' => [AuthController::class, 'login'],
             'GET:/logout' => [AuthController::class, 'logout'],
             'GET:/blogs' => [BlogController::class, 'index'],

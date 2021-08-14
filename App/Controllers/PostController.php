@@ -10,6 +10,15 @@ use Core\Session;
 
 class PostController {
 
+    public function show(): void
+    {
+        $post = Post::select([
+            ['slug', '=', 'dillinger-guide-we34ct534d']
+        ])[0];
+
+        include('./Views/Post/Show.php');
+    }
+
     public function create(): void
     {
         include('./Views/Post/Create.php');
