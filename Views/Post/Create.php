@@ -18,6 +18,11 @@
       crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@creativebulma/bulma-tagsinput@1.0.3/dist/js/bulma-tagsinput.min.js"></script>
   <style>
+
+      html {
+          overflow-y: auto;
+      }
+
     body, button, input, optgroup, select, textarea {
       font-family: 'Lexend', 'Segoe UI', Roboto, 'Fira Sans', Helvetica, Arial, sans-serif;
     }
@@ -61,6 +66,64 @@
     }
     .tab-body.is-active {
         display: block;
+    }
+
+    .post-form input,
+    .post-form textarea {
+        border: 0;
+        box-shadow: none;
+    }
+
+    .post-form input:focus,
+    .post-form textarea:focus {
+        box-shadow: none;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: -41vw;
+        z-index: 1000;
+        width: 40vw;
+        overflow: auto;
+        padding: 2vw 2vw 2vw 4vw;
+        box-shadow: 5px 8px 20px 0 rgba(0, 0, 0, 0.05);
+        background-color: white;
+        transition: all 0.8s cubic-bezier(.47,1.64,.41,.8);
+    }
+
+    .sidebar_active {
+        left: -2vw;
+    }
+
+    .sidebar__open {
+        color: #f59425;
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .sidebar__close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+    }
+
+    .sidebar blockquote {
+        background: #f9f9f9;
+        border-left: 10px solid #ccc;
+        padding: 1em;
+    }
+
+    .sidebar ul {
+        padding: revert;
+        list-style-type: disc;
+    }
+
+    .sidebar ul ul {
+        padding: revert;
+        list-style-type: circle;
     }
   </style>
 </head>
@@ -111,9 +174,24 @@
 </nav>
 
 <section class="section">
+  <div class="container is-flex is-justify-content-space-between">
+    <div>
+      <span id="sidebar-open" class="material-icons-outlined sidebar__open">
+        help_outline
+      </span>
+    </div>
+    <div>
+      <button class="button is-info is-rounded is-outlined mr-2" type="submit">
+        Sačuvaj nacrt
+      </button>
+      <button class="button is-success is-rounded is-outlined" type="submit">
+        Objavi
+      </button>
+    </div>
+  </div>
   <div class="container">
     <section class="section">
-      <form>
+      <form class="post-form" id="post-form">
         <div class="field is-horizontal">
 <!--          <div class="field-label is-large">-->
 <!--            <label class="label" for="title">Naslov</label>-->
@@ -121,14 +199,26 @@
           <div class="field-body">
             <div class="field">
               <p class="control">
-                <input class="input is-large" id="title" type="text" name="title" placeholder="Naslov" autofocus style="border: 0; box-shadow: none">
+                <input
+                  class="input is-large"
+                  id="title"
+                  type="text"
+                  name="title"
+                  placeholder="Naslov"
+                  autofocus
+                />
               </p>
             </div>
           </div>
         </div>
         <div class="field">
           <div class="control">
-            <textarea class="textarea is-medium has-fixed-size" name="content" placeholder="Tvoja priča" rows="20"></textarea>
+            <textarea
+              class="textarea is-medium has-fixed-size"
+              name="content"
+              placeholder="Tvoja priča"
+              rows="22"
+            ></textarea>
           </div>
         </div>
       </form>
@@ -136,11 +226,75 @@
   </div>
 </section>
 
+<section id="sidebar" class="sidebar">
+  <span id="sidebar-close" class="material-icons-outlined sidebar__close">
+    close
+  </span>
+
+  <p>Tekstove je moguće stilizovati uz pomoc Markdown sintakse.</p>
+
+  <h6 class="title is-6 mt-4">Naslovi</h6>
+  <pre>
+    # Naslov veličine 1
+    ## Naslov veličine 2
+    ### Naslov veličine 3
+    #### Naslov veličine 4</pre>
+  <h1 class="title is-1">Naslov veličine 1</h1>
+  <h2 class="title is-2">Naslov veličine 2</h2>
+  <h3 class="title is-3">Naslov veličine 3</h3>
+  <h4 class="title is-4">Naslov veličine 4</h4>
+
+  <h6 class="title is-6 mt-4">Stilizovanje teksta</h6>
+  <pre>
+    **Podebljan tekst**
+    *Kurzivni tekst*
+    > I ovo je citat</pre>
+
+  <p class="mt-4"><strong>Podebljan tekst</strong></p>
+  <p><em>Kurzivni tekst</em></p>
+  <blockquote>I ovo je citat</blockquote>
+
+  <h6 class="title is-6 mt-4">Liste</h6>
+  <pre>
+    - Prva stavka
+    - Druga stavka
+    - Treća stavka
+      - Uvučena stavka
+      - Uvučena stavka
+    - Četvrta stavka</pre>
+
+  <ul>
+    <li>Prva stavka</li>
+    <li>Druga stavka</li>
+    <li>Treća stavka
+      <ul>
+        <li>Uvučena stavka</li>
+        <li>Uvučena stavka</li>
+      </ul>
+    </li>
+    <li>Četvrta stavka</li>
+  </ul>
+
+  <h6 class="title is-6 mt-4">Ostalo</h6>
+  <pre class="mb-4">
+    [Link](https://blogers.rasko-dev.website)
+    ![blog_logo](logo.png)</pre>
+
+  <p><a href="https://blogers.rasko-dev.website" target="_blank">Link</a></p>
+  <p><img alt="blog_logo" src="/assets/image/logo.png" height="50" width="50" /></p>
+</section>
+
 </body>
 
 <script>
   $(document).ready(() => {
+    $("#sidebar-open").click(() => {
+      $("#sidebar").addClass("sidebar_active");
+    });
 
+    $("#sidebar-close").click(() => {
+      $("#sidebar").removeClass("sidebar_active");
+    });
   });
 </script>
 
