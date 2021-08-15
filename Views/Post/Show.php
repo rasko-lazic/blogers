@@ -75,6 +75,53 @@ $post = $post ?? null;
         margin: 0.5em 1em;
     }
 
+    .action-container {
+        margin-top: 2em;
+        padding-top: 2em;
+        border-top: 1px solid #e6e6e6;
+    }
+
+      .sidebar {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          right: -42vw;
+          z-index: 1000;
+          width: 40vw;
+          overflow: auto;
+          padding: 2vw 4vw 2vw 2vw;
+          box-shadow: -10px 8px 20px 0 rgba(0, 0, 0, 0.05);
+          background-color: white;
+          transition: all 0.8s cubic-bezier(.47,1.64,.41,.8);
+      }
+
+      .sidebar_active {
+          right: -2vw;
+      }
+
+      .sidebar__close {
+          position: absolute;
+          top: 25px;
+          right: 25px;
+          cursor: pointer;
+      }
+
+      .sidebar__overlay {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 100%;
+          opacity: 0.8;
+      }
+
+      .sidebar__login-link {
+          display: block;
+          padding: 1em;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+          color: initial;
+          text-align: center;
+      }
+
   </style>
 </head>
 <body>
@@ -128,14 +175,41 @@ $post = $post ?? null;
     <div class="wrapper">
       <h1 class="title size-1 mt-0"><?php echo $post->title ?? '' ?></h1>
       <?php echo $post->htmlText ?? 'Post is missing' ?>
+      <div class="action-container">
+        <span id="sidebar-open" class="material-icons-outlined is-size-3 is-clickable">chat_bubble_outline</span>
+      </div>
     </div>
   </div>
 </section>
+
+<section id="sidebar" class="sidebar">
+  <h2 class="title is-size-4">Komentari</h2>
+  <span id="sidebar-close" class="material-icons-outlined sidebar__close">
+    close
+  </span>
+
+  <div class="sidebar__overlay">
+    <a class="sidebar__login-link" href="/?action=login">Podeli svoje mišljenje sa ostalima</a>
+    <div>
+      <p class="is-size-5 has-text-centered is-italic">Nema komentara za ovu priču.</p>
+      <p class="is-size-5 has-text-centered is-italic">Budi ti prvi!</p>
+    </div>
+    <div></div>
+  </div>
+
+</section>
+
 </body>
 
 <script>
   $(document).ready(() => {
+    $("#sidebar-open").click(() => {
+      $("#sidebar").addClass("sidebar_active");
+    });
 
+    $("#sidebar-close").click(() => {
+      $("#sidebar").removeClass("sidebar_active");
+    });
   });
 </script>
 

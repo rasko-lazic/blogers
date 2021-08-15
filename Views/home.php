@@ -565,6 +565,21 @@
   };
 
   $(document).ready(() => {
+
+    // Check if we have any modals we need to open
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.has('action')) {
+      const action = urlParams.get('action');
+
+      // For now this is the only action allowed
+      if (action === 'login') {
+        $("#login-modal").addClass("is-active");
+      } else {
+        console.error("Acton not allowed.")
+      }
+    }
+
     // Login modal triggers
     $("#login-button").click(() => {
       $("#login-modal").addClass("is-active");
