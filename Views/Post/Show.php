@@ -81,13 +81,34 @@ $post = $post ?? null;
         border-top: 1px solid #e6e6e6;
     }
 
+    .fast-access {
+        visibility: hidden;
+        position: fixed;
+        top: 15em;
+        left: 5em;
+        width: 10em;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.5s linear;
+    }
+
+    .fast-access_active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+      @media (max-width: 1250px) {
+          .fast-access {
+              display: none;
+          }
+      }
+
       .sidebar {
           position: fixed;
           top: 0;
           bottom: 0;
-          right: -42vw;
+          right: -37vw;
           z-index: 1000;
-          width: 40vw;
+          width: 35vw;
           overflow: auto;
           padding: 2vw 4vw 2vw 2vw;
           box-shadow: -10px 8px 20px 0 rgba(0, 0, 0, 0.05);
@@ -102,15 +123,15 @@ $post = $post ?? null;
       .sidebar__close {
           position: absolute;
           top: 25px;
-          right: 25px;
+          right: 35px;
           cursor: pointer;
       }
 
       .sidebar__overlay {
           display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          height: 100%;
+          justify-content: center;
+          align-items: center;
+          height: 70%;
           opacity: 0.8;
       }
 
@@ -119,7 +140,24 @@ $post = $post ?? null;
           padding: 1em;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
           color: initial;
-          text-align: center;
+          opacity: 0.6;
+      }
+
+      .sidebar__comment-input {
+          width: 100%;
+          height: 3.5em;
+          padding: 1em 1em 0;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+          font-size: 1em;
+          resize: none;
+          border: 0;
+          outline: none;
+          transition: height 0.2s linear;
+      }
+
+      .sidebar__comment-input:focus {
+          height: 10em;
+          padding: 1em;
       }
 
   </style>
@@ -176,8 +214,24 @@ $post = $post ?? null;
       <h1 class="title size-1 mt-0"><?php echo $post->title ?? '' ?></h1>
       <?php echo $post->htmlText ?? 'Post is missing' ?>
       <div class="action-container">
-        <span id="sidebar-open" class="material-icons-outlined is-size-3 is-clickable">chat_bubble_outline</span>
+        <span class="is-inline-flex is-align-items-center mr-4">
+          <span class="material-icons-outlined is-size-3 is-clickable mr-2">favorite_border</span> 12
+        </span>
+        <span id="sidebar-open" class="material-icons-outlined is-size-3 is-clickable">forum</span>
       </div>
+    </div>
+  </div>
+
+  <div id="fast-access" class="fast-access">
+    <h3 class="subtitle is-6">Test Nalog</h3>
+    <p class="is-size-7">
+      Ovo je opis za ovaj test nalog. Ne bi trebalo da je previše dugačak
+    </p>
+    <div class="action-container">
+        <span class="is-inline-flex is-align-items-center mr-4">
+          <span class="material-icons-outlined is-size-3 is-clickable mr-2">favorite_border</span> 12
+        </span>
+      <span id="sidebar-open-fast" class="material-icons-outlined is-size-3 is-clickable">forum</span>
     </div>
   </div>
 </section>
@@ -188,13 +242,26 @@ $post = $post ?? null;
     close
   </span>
 
+  <?php
+  if (\Core\Session::check()) {
+    echo '
+      <textarea 
+        class="sidebar__comment-input" 
+        placeholder="Podeli svoje mišljenje sa ostalima"
+      ></textarea>
+    ';
+  } else {
+    echo '
+      <a class="sidebar__login-link" href="/?action=login">Podeli svoje mišljenje sa ostalima</a>
+    ';
+  }
+  ?>
+
   <div class="sidebar__overlay">
-    <a class="sidebar__login-link" href="/?action=login">Podeli svoje mišljenje sa ostalima</a>
     <div>
       <p class="is-size-5 has-text-centered is-italic">Nema komentara za ovu priču.</p>
       <p class="is-size-5 has-text-centered is-italic">Budi ti prvi!</p>
     </div>
-    <div></div>
   </div>
 
 </section>
@@ -203,7 +270,21 @@ $post = $post ?? null;
 
 <script>
   $(document).ready(() => {
-    $("#sidebar-open").click(() => {
+
+    let fastAccess = $("#fast-access");
+
+    $(window).scroll(() => {
+      if ($(window).scrollTop() > 800) {
+        if (!fastAccess.hasClass("fast-access_active")) {
+          fastAccess.addClass('fast-access_active');
+        }
+      } else if (fastAccess.hasClass("fast-access_active")) {
+        fastAccess.removeClass('fast-access_active');
+      }
+    })
+
+    const sidebarOpenActions =
+    $("#sidebar-open, #sidebar-open-fast").click(() => {
       $("#sidebar").addClass("sidebar_active");
     });
 
