@@ -108,6 +108,8 @@ $post = $post ?? null;
           bottom: 0;
           right: -37vw;
           z-index: 1000;
+          display: flex;
+          flex-direction: column;
           width: 35vw;
           overflow: auto;
           padding: 2vw 4vw 2vw 2vw;
@@ -123,7 +125,7 @@ $post = $post ?? null;
       .sidebar__close {
           position: absolute;
           top: 25px;
-          right: 35px;
+          right: 2.5vw;
           cursor: pointer;
       }
 
@@ -143,21 +145,60 @@ $post = $post ?? null;
           opacity: 0.6;
       }
 
-      .sidebar__comment-input {
-          width: 100%;
+      .comment-input {
+          display: flex;
+          flex-direction: column;
           height: 3.5em;
-          padding: 1em 1em 0;
+          margin-bottom: 2em;
+          padding: 1em;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-          font-size: 1em;
-          resize: none;
-          border: 0;
-          outline: none;
-          transition: height 0.2s linear;
+          transition: height 0.3s linear;
       }
 
-      .sidebar__comment-input:focus {
+      .comment-input__user,
+      .comment-input__actions {
+          height: 0;
+          overflow: hidden;
+          opacity: 0;
+          transition: all 0.3s linear;
+      }
+
+      .comment-input_expanded {
           height: 10em;
+      }
+
+      .comment-input_expanded .comment-input__user,
+      .comment-input_expanded .comment-input__actions{
+          height: 2em;
+          opacity: 1;
+      }
+
+      .comment-input__textarea {
+          flex: 1;
+          font-size: 1em;
+          border: 0;
+          outline: none;
+          resize: none;
+      }
+
+      .comment-list {
+          flex: 1;
           padding: 1em;
+          overflow: auto;
+          border-top: 1px solid #e6e6e6;
+      }
+
+      .comment-list__card {
+          margin: 2em 0;
+          border-bottom: 1px solid #e6e6e6;
+          font-size: 0.875em;
+      }
+
+      .comment-list__avatar {
+          width: 2rem;
+          height: 2rem;
+          margin-right: 1em;
+          border-radius: 50%;
       }
 
   </style>
@@ -242,27 +283,81 @@ $post = $post ?? null;
     close
   </span>
 
-  <?php
-  if (\Core\Session::check()) {
-    echo '
-      <textarea 
-        class="sidebar__comment-input" 
+  <?php if (\Core\Session::check()): ?>
+    <div id="comment-input" class="comment-input">
+      <div class="comment-input__user">
+        Test Account
+      </div>
+      <textarea
+        class="comment-input__textarea"
         placeholder="Podeli svoje mišljenje sa ostalima"
       ></textarea>
-    ';
-  } else {
-    echo '
-      <a class="sidebar__login-link" href="/?action=login">Podeli svoje mišljenje sa ostalima</a>
-    ';
-  }
-  ?>
-
-  <div class="sidebar__overlay">
-    <div>
-      <p class="is-size-5 has-text-centered is-italic">Nema komentara za ovu priču.</p>
-      <p class="is-size-5 has-text-centered is-italic">Budi ti prvi!</p>
+      <div class="comment-input__actions has-text-right">
+        <button id="comment-cancel" class="button is-small is-rounded is-danger is-inverted mr-2">
+          Poništi
+        </button>
+        <button class="button is-small is-success is-rounded is-outlined">
+          Podeli
+        </button>
+      </div>
     </div>
-  </div>
+  <?php else: ?>
+    <a class="sidebar__login-link" href="/?action=login">Podeli svoje mišljenje sa ostalima</a>
+  <?php endif; ?>
+
+  <ul class="comment-list">
+    <li class="comment-list__card">
+      <div class="is-flex is-align-items-center mb-4">
+        <img class="comment-list__avatar" src="/assets/image/avatar.png" alt="user avatar">
+        <div class="is-flex-grow-1">
+          <p>Milan Milanov</p>
+          <p class="has-text-grey-light">12:30</p>
+        </div>
+      </div>
+      <p class="mb-2">
+        Biće miholjska zima. Sve je sprženo. Kakva bre jesen, zima, to više ne postoji, kap kiše ne može da padne nedeljama. Ne razumem kako se ljudima to sviđa kada je evidentno da idemo u totalnu propast, biće nestašica i vode i struje, teške suše, totalni pakao
+      </p>
+      <span class="is-inline-flex is-align-items-center mb-2">
+          <span class="material-icons-outlined is-size-3 is-clickable mr-2">favorite_border</span> 23
+        </span>
+    </li>
+    <li class="comment-list__card">
+      <div class="is-flex is-align-items-center mb-4">
+        <img class="comment-list__avatar" src="/assets/image/avatar.png" alt="user avatar">
+        <div class="is-flex-grow-1">
+          <p>Milan Milanov</p>
+          <p class="has-text-grey-light">12:30</p>
+        </div>
+      </div>
+      <p class="mb-2">
+        Biće miholjska zima. Sve je sprženo. Kakva bre jesen, zima, to više ne postoji, kap kiše ne može da padne nedeljama. Ne razumem kako se ljudima to sviđa kada je evidentno da idemo u totalnu propast, biće nestašica i vode i struje, teške suše, totalni pakao
+      </p>
+      <span class="is-inline-flex is-align-items-center mb-2">
+          <span class="material-icons-outlined is-size-3 is-clickable mr-2">favorite_border</span> 23
+        </span>
+    </li>
+    <li class="comment-list__card">
+      <div class="is-flex is-align-items-center mb-4">
+        <img class="comment-list__avatar" src="/assets/image/avatar.png" alt="user avatar">
+        <div class="is-flex-grow-1">
+          <p>Milan Milanov</p>
+          <p class="has-text-grey-light">12:30</p>
+        </div>
+      </div>
+      <p class="mb-2">
+        Biće miholjska zima. Sve je sprženo. Kakva bre jesen, zima, to više ne postoji, kap kiše ne može da padne nedeljama. Ne razumem kako se ljudima to sviđa kada je evidentno da idemo u totalnu propast, biće nestašica i vode i struje, teške suše, totalni pakao
+      </p>
+      <span class="is-inline-flex is-align-items-center mb-2">
+          <span class="material-icons-outlined is-size-3 is-clickable mr-2">favorite_border</span> 23
+        </span>
+    </li>
+  </ul>
+<!--  <div class="sidebar__overlay">-->
+<!--    <div>-->
+<!--      <p class="is-size-5 has-text-centered is-italic">Nema komentara za ovu priču.</p>-->
+<!--      <p class="is-size-5 has-text-centered is-italic">Budi ti prvi!</p>-->
+<!--    </div>-->
+<!--  </div>-->
 
 </section>
 
@@ -281,9 +376,16 @@ $post = $post ?? null;
       } else if (fastAccess.hasClass("fast-access_active")) {
         fastAccess.removeClass('fast-access_active');
       }
-    })
+    });
 
-    const sidebarOpenActions =
+    $("#comment-input").click(() => {
+      $("#comment-input").addClass('comment-input_expanded');
+    });
+    $("#comment-cancel").click(event => {
+      event.stopPropagation();
+      $("#comment-input").removeClass('comment-input_expanded');
+    });
+
     $("#sidebar-open, #sidebar-open-fast").click(() => {
       $("#sidebar").addClass("sidebar_active");
     });
