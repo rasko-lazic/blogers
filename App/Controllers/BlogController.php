@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Blog;
+use App\Router;
 use Core\Session;
 
 class BlogController {
@@ -26,4 +27,8 @@ class BlogController {
         ]);
     }
 
+    public function destroy(): void
+    {
+        Router::redirect('/blogs');
+    }
 }

@@ -22,6 +22,10 @@ class Router {
         [$this->url, $this->query] = explode('?', $_SERVER['REQUEST_URI']) + ['/', ''];
         $this->method = $_SERVER['REQUEST_METHOD'];
 
+        if (isset($_POST['_method'])) {
+            $this->method = $_POST['_method'];
+        }
+
         $this->redirectToController();
     }
 
@@ -35,6 +39,7 @@ class Router {
             'GET:/blogs' => [BlogController::class, 'index'],
             'GET:/blogs/?' => [BlogController::class, 'show'],
             'POST:/blogs' => [BlogController::class, 'store'],
+            'DELETE:/blogs/?' => [BlogController::class, 'destroy'],
             'GET:/blogs/?/posts' => [PostController::class, 'create'],
             'POST:/blogs/?/posts' => [PostController::class, 'store'],
         ];
@@ -70,5 +75,6 @@ class Router {
     public static function redirect($path)
     {
         header('Location: ' . self::BASE_URL . $path);
+        die();
     }
 }
