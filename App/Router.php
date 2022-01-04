@@ -6,6 +6,7 @@ use App\Controllers\HomeController;
 use App\Controllers\AuthController;
 use App\Controllers\BlogController;
 use App\Controllers\PostController;
+use Core\Request;
 
 class Router {
 
@@ -22,8 +23,11 @@ class Router {
         [$this->url, $this->query] = explode('?', $_SERVER['REQUEST_URI']) + ['/', ''];
         $this->method = $_SERVER['REQUEST_METHOD'];
 
+        // _method field is used for simulation of PUT and DELETE requests
         if (isset($_POST['_method'])) {
             $this->method = $_POST['_method'];
+            // Once we extracted the necessary information, we can drop the key
+            unset($_POST['_method']);
         }
 
         $this->redirectToController();
@@ -33,26 +37,30 @@ class Router {
     {
         return [
             'GET:/' => [HomeController::class, 'index'],
-            'GET:/?' => [PostController::class, 'show'],
             'POST:/login' => [AuthController::class, 'login'],
             'GET:/logout' => [AuthController::class, 'logout'],
+            'DELETE:/posts/*' => [PostController::class, 'destroy'],
             'GET:/blogs' => [BlogController::class, 'index'],
-            'GET:/blogs/?' => [BlogController::class, 'show'],
+            'GET:/blogs/*/posts' => [PostController::class, 'create'],
+            'GET:/blogs/*' => [BlogController::class, 'show'],
             'POST:/blogs' => [BlogController::class, 'store'],
-            'DELETE:/blogs/?' => [BlogController::class, 'destroy'],
-            'GET:/blogs/?/posts' => [PostController::class, 'create'],
-            'POST:/blogs/?/posts' => [PostController::class, 'store'],
+            'PUT:/blogs/*' => [BlogController::class, 'update'],
+            'DELETE:/blogs/*' => [BlogController::class, 'destroy'],
+            'POST:/blogs/*/posts' => [PostController::class, 'store'],
+            'GET:/*' => [PostController::class, 'show'],
         ];
     }
 
     private function redirectToController(): void
     {
         try {
-            $action = self::getRoutes()["{$this->method}:{$this->url}"];
+            $action = self::getRoutes()["$this->method:$this->url"];
         } catch (\Exception $e) {
             foreach (self::getRoutes() as $route => $action) {
-                if (fnmatch($route, "{$this->method}:{$this->url}")) {
-                    $this->goToAction($action);
+                if (fnmatch($route, "$this->method:$this->url")) {
+                    $wildcardIndex = array_search('*', explode('/', $route));
+                    $wildcardValue = explode('/', "$this->method:$this->url")[$wildcardIndex] ?? null;
+                    $this->goToAction($action, $wildcardValue);
                     return;
                 }
             }
@@ -62,12 +70,16 @@ class Router {
         $this->goToAction($action);
     }
 
-    private function goToAction(array $action): void
+    private function goToAction(array $action, $routeParameter = null): void
     {
         [$controller, $method] = $action;
         $controller = new $controller();
         if (method_exists($controller, $method)) {
-            $controller->$method();
+            if (in_array($this->method, ['POST', 'PUT'])) {
+                $controller->$method(new Request(), $routeParameter);
+            } else {
+                $controller->$method($routeParameter);
+            }
         }
     }
 

@@ -15,14 +15,19 @@ class Model {
         $this->db = Database::getInstance();
     }
 
-    protected function runQuery($query, $bindings): array
+    protected function runQuery($query, $bindings, $returnRowCount = false)
     {
         $stmt = $this->db->prepare($query);
         $stmt->execute($bindings);
+
+        if ($returnRowCount) {
+            return $stmt->rowCount();
+        }
+
         $rows = $stmt->fetchAll();
 
         // If query found no rows, convert it to null
-        if ($rows == false) {
+        if ($rows === false) {
             $rows = [];
         } else {
             $rows = $this->formatDatabaseData($rows);
@@ -45,7 +50,7 @@ class Model {
 
     public static function fetchById($id): array
     {
-        return (new static)->runQuery('id = :id', ['id' => $id]);
+        return self::select([['id', '=', $id]]);
     }
 
     public static function select($conditions): array
@@ -53,12 +58,18 @@ class Model {
         $table = (new static)->table;
         $conditionString = join(
             ' AND ',
-            array_map(function ($c) {return "{$c[0]} {$c[1]} ?";}, $conditions)
+            array_map(function ($c) {
+                $placeholder = '?';
+                // If binding column is an array, we have to patch a string of named parameters
+                if (is_array($c[2])) {
+                    $placeholder = '(' . str_repeat('?,', count($c[2]) - 1) . '?)';
+                }
+                return "$c[0] $c[1] $placeholder";
+            }, $conditions)
         );
-
         return (new static)->runQuery(
             "SELECT * FROM $table WHERE $conditionString",
-            array_column($conditions, 2)
+            Helpers::array_flatten(array_column($conditions, 2))
         );
     }
 
@@ -74,5 +85,26 @@ class Model {
         );
 
         return (new static)->db->lastInsertId();
+    }
+
+    public static function update($id, $parameters): bool
+    {
+        $table = (new static)->table;
+        $columns = join(' = ?, ', array_keys($parameters)) . ' = ?';
+        $updateCount = (new static)->runQuery(
+            "UPDATE $table SET $columns WHERE id = ?",
+            array_merge(array_values($parameters), [$id]),
+            true
+        );
+
+        return $updateCount === 1;
+    }
+
+    public static function delete($id): bool
+    {
+        $table = (new static)->table;
+
+        $deleteCount = (new static)->runQuery("DELETE FROM $table WHERE id = ?", [$id], true);
+        return $deleteCount === 1;
     }
 }

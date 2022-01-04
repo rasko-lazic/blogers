@@ -7,10 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Bloger</title>
   <link rel="shortcut icon" type="image/png" href="/assets/image/logo.png"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@creativebulma/bulma-tagsinput@1.0.3/dist/css/bulma-tagsinput.min.css">
   <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -50,15 +50,6 @@
         min-height: 100px;
         padding: 2em 4em;
         border-bottom: 1px solid #e6e6e6;
-    }
-
-    .material-icons-outlined {
-        opacity: 0.6;
-        transition: transform 0.2s linear;
-    }
-    .material-icons-outlined:hover {
-        opacity: 1;
-        transform: scale(1.2);
     }
 
     .tab-body {
@@ -125,6 +116,27 @@
         padding: revert;
         list-style-type: circle;
     }
+
+    #image-modal .modal-card-body {
+        display: flex;
+        flex-wrap: wrap;
+        max-height: 60vh;
+    }
+
+    .image-card {
+        flex-basis: calc((100% - 3em) / 3);
+        margin: 0.5em;
+        padding: 0.5em;
+        border: 1px solid #e6e6e6;
+        text-align: center;
+    }
+
+    .image-card img:hover {
+        position: relative;
+        transform: scale(2);
+        transition: transform .2s linear;
+        z-index: 10;
+    }
   </style>
 </head>
 <body>
@@ -181,6 +193,9 @@
       </span>
     </div>
     <div>
+      <button id="image-button" class="button is-info is-rounded is-outlined mr-2">
+        Dodaj sliku
+      </button>
       <button class="button is-info is-rounded is-outlined mr-2" type="submit" form="post-form">
         Sačuvaj nacrt
       </button>
@@ -284,6 +299,59 @@
   <p><img alt="blog_logo" src="/assets/image/logo.png" height="50" width="50" /></p>
 </section>
 
+<div id="image-modal" class="modal">
+  <div id="image-modal-background" class="modal-background"></div>
+  <button id="image-modal-close" class="modal-close is-large" aria-label="close"></button>
+  <div class="modal-card">
+    <section class="modal-card-body py-6">
+      <div class="image-card">
+        <img src="https://picsum.photos/100?random=1" />
+        <p class="control has-icons-right">
+          <input class="input is-small" type="text" value="https://blogers.rasko-dev.website/images/rwe54wwsefsww34432.png" readonly />
+          <span class="icon is-small is-right">
+            <span class="material-icons-outlined is-clickable" style="color: initial" title="Kopiraj">
+              content_copy
+            </span>
+          </span>
+        </p>
+      </div>
+      <div class="image-card">
+        <img src="https://picsum.photos/100?random=2" />
+        <p class="control has-icons-right">
+          <input class="input is-small" type="text" value="https://blogers.rasko-dev.website/images/rwe54wwsefsww34432.png" readonly />
+          <span class="icon is-small is-right">
+            <span class="material-icons-outlined is-clickable" style="color: initial" title="Kopiraj">
+              content_copy
+            </span>
+          </span>
+        </p>
+      </div>
+      <div class="image-card">
+        <img src="https://picsum.photos/100?random=3" />
+        <p class="control has-icons-right">
+          <input class="input is-small" type="text" value="https://blogers.rasko-dev.website/images/rwe54wwsefsww34432.png" readonly />
+          <span class="icon is-small is-right">
+            <span class="material-icons-outlined is-clickable" style="color: initial" title="Kopiraj">
+              content_copy
+            </span>
+          </span>
+        </p>
+      </div>
+      <div class="image-card">
+        <img src="https://picsum.photos/100?random=4" />
+        <p class="control has-icons-right">
+          <input class="input is-small" type="text" value="https://blogers.rasko-dev.website/images/rwe54wwsefsww34432.png" readonly />
+          <span class="icon is-small is-right">
+            <span class="material-icons-outlined is-clickable" style="color: initial" title="Kopiraj">
+              content_copy
+            </span>
+          </span>
+        </p>
+      </div>
+    </section>
+  </div>
+</div>
+
 </body>
 
 <script>
@@ -291,10 +359,20 @@
     $("#sidebar-open").click(() => {
       $("#sidebar").addClass("sidebar_active");
     });
-
     $("#sidebar-close").click(() => {
       $("#sidebar").removeClass("sidebar_active");
     });
+
+    $("#image-button").click(() => {
+      $("#image-modal").addClass("is-active");
+    });
+
+    const closeImageModal = () => {
+      $("#image-modal").removeClass("is-active");
+    };
+
+    $("#image-modal-background").click(closeImageModal);
+    $("#image-modal-close").click(closeImageModal);
   });
 </script>
 

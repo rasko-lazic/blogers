@@ -47,4 +47,14 @@ class PostController {
 
         Router::redirect('/blogs/1');
     }
+
+    public function destroy($id): void
+    {
+        $blogId = Post::fetchById($id)[0]->blogId ?? null;
+        $deleteSuccessful = Post::delete($id);
+        if ($deleteSuccessful) {
+            Router::redirect("/blogs/$blogId");
+        }
+    }
+
 }

@@ -1,3 +1,8 @@
+<?php
+// Initialize view variables
+$blogs = $blogs ?? [];
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -159,24 +164,18 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-            <?php
-            if (\Core\Session::check()) {
-                echo '
-                    <a class="button sign-up" href="/logout">
-                        <strong>Logout</strong>
-                    </a>
-                ';
-            } else {
-                echo '
-                    <a id="register-button" class="button sign-up">
-                      <strong>Sign up</strong>
-                    </a>
-                    <a id="login-button" class="button is-dark is-outlined">
-                      Log in
-                    </a>
-                ';
-            }
-            ?>
+          <?php if (\Core\Session::check()) :?>
+            <a class="button sign-up" href="/logout">
+              <strong>Logout</strong>
+            </a>
+          <?php else :?>
+            <a id="register-button" class="button sign-up">
+              <strong>Sign up</strong>
+            </a>
+            <a id="login-button" class="button is-dark is-outlined">
+              Log in
+            </a>
+          <?php endif ?>
         </div>
       </div>
     </div>
@@ -185,52 +184,34 @@
 
 <section class="section">
   <div class="container">
-    <div class="blog-line">
-      <img id="blog-logo-5" class="blog-line__logo" src="https://picsum.photos/100?blur=2&random=1" alt="blog_logo" />
-      <div class="is-flex is-align-content-center is-flex-grow-1">
-        <div class="mr-6">
-          <p id="blog-title-5" class="is-size-4">Prvi blog</p>
-          <p id="blog-description-5">Opis prvog bloga, malo je duzi da sve bude vidljivo</p>
+    <?php foreach ($blogs as $blog) :?>
+      <div class="blog-line">
+        <img id="blog-logo-<?= $blog->id ?>" class="blog-line__logo" src="https://picsum.photos/100?blur=2&random=<?= $blog->id ?>" alt="blog_logo" />
+        <div class="is-flex is-align-content-center is-flex-grow-1">
+          <div class="mr-6">
+            <p id="blog-title-<?= $blog->id ?>" class="is-size-4"><?= $blog->name ?></p>
+            <p id="blog-description-<?= $blog->id ?>"><?= $blog->description ?></p>
+          </div>
+          <div id="blog-tags-<?= $blog->id ?>" class="tags are-small is-flex-grow-1 mr-4">
+            <?php foreach ($blog->tags as $tag) :?>
+              <span class="tag"><?= $tag->name ?></span>
+            <?php endforeach ?>
+          </div>
         </div>
-        <div id="blog-tags-5" class="tags are-small is-flex-grow-1 mr-4">
-          <span class="tag">Veze</span>
-          <span class="tag">Produktivnost</span>
-          <span class="tag">Politika</span>
+        <div style="white-space: nowrap">
+          <a class="material-icons-outlined mr-2 is-clickable c-inherit" href="/blogs/<?= $blog->id ?>">add</a>
+          <span class="edit-blog material-icons-outlined mr-2 is-clickable" data-blog="<?= $blog->id ?>">
+            edit
+          </span>
+          <button class="material-icons-outlined is-clickable" type="submit" form="blog-delete-<?= $blog->id ?>">
+            delete_outline
+          </button>
         </div>
+        <form id="blog-delete-<?= $blog->id ?>" action="/blogs/<?= $blog->id ?>" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+        </form>
       </div>
-      <div style="white-space: nowrap">
-        <a class="material-icons-outlined mr-2 is-clickable c-inherit" href="/blogs/5">add</a>
-        <span class="edit-blog material-icons-outlined mr-2 is-clickable" data-blog="5">
-          edit
-        </span>
-        <button class="material-icons-outlined is-clickable" type="submit" form="blog-delete-5">
-          delete_outline
-        </button>
-      </div>
-      <form id="blog-delete-5" action="/blogs/5" method="POST">
-        <input type="hidden" name="_method" value="DELETE">
-      </form>
-    </div>
-    <div class="blog-line">
-      <img class="blog-line__logo" src="https://picsum.photos/100?blur=2&random=2" alt="blog_logo" />
-      <div class="is-flex is-align-content-center is-flex-grow-1">
-        <div class="mr-6">
-          <p class="is-size-4">Drugi blog</p>
-          <p>Opis drugog bloga, malo je duzi da sve bude vidljivo</p>
-        </div>
-        <div class="tags are-small is-flex-grow-1 mr-4">
-          <span class="tag is-clickable">Poznati</span>
-          <span class="tag is-clickable">Zdravlje</span>
-          <span class="tag is-clickable">Programiranje</span>
-          <span class="tag is-clickable">Meditacija</span>
-        </div>
-      </div>
-      <div style="white-space: nowrap">
-        <a class="material-icons-outlined mr-2 is-clickable c-inherit" href="/blogs/5">add</a>
-        <span class="material-icons-outlined mr-2 is-clickable">edit</span>
-        <span class="material-icons-outlined is-clickable">delete_outline</span>
-      </div>
-    </div>
+    <?php endforeach ?>
     <div id="new-blog-button" class="py-4 has-text-centered">
       <span class="material-icons-outlined is-size-2 is-clickable">add_circle_outline</span>
     </div>
@@ -242,10 +223,10 @@
   <button id="blog-modal-close" class="modal-close is-large" aria-label="close"></button>
   <div class="modal-card">
     <header class="modal-card-head py-6">
-      <p class="modal-card-title has-text-centered">Novi blog</p>
+      <p id="modal-title" class="modal-card-title has-text-centered">Novi blog</p>
     </header>
     <section class="modal-card-body py-6">
-      <form id="blog-form" method="POST" action="/blog">
+      <form id="blog-form" method="POST" action="/blogs">
         <div class="file is-boxed is-centered mb-4">
           <label class="file-label">
             <input class="file-input" type="file" name="logo">
@@ -261,20 +242,20 @@
         </div>
         <div class="field">
           <div class="control">
-            <input id="title" class="input is-large" type="text" name="title" placeholder="Naziv bloga" />
+            <input id="title" class="input is-large" type="text" name="name" placeholder="Naziv bloga" />
           </div>
         </div>
         <div class="field">
           <div class="control">
-            <textarea id="description" class="textarea has-fixed-size" placeholder="Opis bloga"></textarea>
+            <textarea id="description" class="textarea has-fixed-size" name="description" placeholder="Opis bloga"></textarea>
           </div>
         </div>
         <div class="field">
           <div class="control">
-            <input id="tags" class="input" type="text" data-type="tags" placeholder="Tagovi">
+            <input id="tags" class="input" type="text" name="tags" data-type="tags" placeholder="Tagovi">
           </div>
         </div>
-        <button class="button is-medium is-fullwidth is-primary mt-4">Napravi blog</button>
+        <button class="button is-medium is-fullwidth is-primary mt-4">Sačuvaj</button>
       </form>
     </section>
   </div>
@@ -286,12 +267,16 @@
   $(document).ready(() => {
     const tagsInput = new BulmaTagsInput('#tags');
     const blogForm = $("#blog-form");
+    const modalTitle = $("#modal-title");
 
     // Register modal triggers
     const blogModal = $("#blog-modal");
     const closeNewModalBlog = () => {
       blogForm.attr('method', 'POST');
-      blogForm.attr('action', '/blog');
+      blogForm.attr('action', '/blogs');
+      modalTitle.text('Novi blog')
+      // If hidden method field exists, lets remove it
+      $('#put-method').remove()
 
       blogModal.removeClass("is-active");
       $("#title").val('');
@@ -301,8 +286,10 @@
 
     $(".edit-blog").click(event => {
       const blogId = event.target.dataset.blog;
-      blogForm.attr('method', 'PUT');
-      blogForm.attr('action', '/blog/5');
+      // We need to dynamically add hidden method input to simulate PUT request
+      $('<input>').attr({id: 'put-method', type: 'hidden', name: '_method', value: 'PUT'}).appendTo(blogForm);
+      blogForm.attr('action', `/blogs/${blogId}`);
+      modalTitle.text('Izmeni blog');
 
       // const logo = $(`#blog-logo-${blogId}`);
       const title = $(`#blog-title-${blogId}`).text();

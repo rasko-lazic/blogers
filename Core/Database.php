@@ -26,6 +26,9 @@ class Database {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_ORACLE_NULLS => PDO::NULL_EMPTY_STRING,
             PDO::ATTR_EMULATE_PREPARES => false,
+            // Necessary to avoid false negatives if update hasn't actually changed data,
+            // but it has matched with a valid row in database
+            PDO::MYSQL_ATTR_FOUND_ROWS => true
         ];
         try {
             $this->pdo = new PDO($dsn, $user, $password, $options);

@@ -1,3 +1,8 @@
+<?php
+// Initialize view variables
+$posts = $posts ?? [];
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,6 +67,12 @@
     .tab-body.is-active {
         display: block;
     }
+
+    button.material-icons-outlined {
+        padding: 0;
+        border: 0;
+        background-color: transparent;
+    }
   </style>
 </head>
 <body>
@@ -86,24 +97,18 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-            <?php
-            if (\Core\Session::check()) {
-                echo '
-                    <a class="button sign-up" href="/logout">
-                        <strong>Logout</strong>
-                    </a>
-                ';
-            } else {
-                echo '
-                    <a id="register-button" class="button sign-up">
-                      <strong>Sign up</strong>
-                      </a>
-                    <a id="login-button" class="button is-dark is-outlined">
-                      Log in
-                    </a>
-                ';
-            }
-            ?>
+          <?php if (\Core\Session::check()) :?>
+            <a class="button sign-up" href="/logout">
+              <strong>Logout</strong>
+            </a>
+          <?php else :?>
+            <a id="register-button" class="button sign-up">
+              <strong>Sign up</strong>
+            </a>
+            <a id="login-button" class="button is-dark is-outlined">
+              Log in
+            </a>
+          <?php endif ?>
         </div>
       </div>
     </div>
@@ -130,30 +135,25 @@
     </div>
     <section id="draft-section" class="section tab-body is-active">
       <ul class="post-list mb-6">
-        <li>
-          <div class="is-flex-grow-1">
-            <h3 class="title is-5">Prvi test</h3>
-            <h4 class="subtitle is-6">Ovo je podnaslov, malo duzi, prva recenica teksta</h4>
-            <p class="is-size-7">Poslednji put izmenjeno pre 14 minuta. 124 reči do sad.</p>
-          </div>
-          <div>
-            <span class="material-icons-outlined mr-2 is-clickable">published_with_changes</span>
-            <span class="material-icons-outlined mr-2 is-clickable">edit</span>
-            <span class="material-icons-outlined mr-2 is-clickable">delete_outline</span>
-          </div>
-        </li>
-        <li>
-          <div class="is-flex-grow-1">
-            <h3 class="title is-5">Drugi tekst</h3>
-            <h4 class="subtitle is-6">Ovo je podnaslov, malo duzi, prva recenica teksta</h4>
-            <p class="is-size-7">Poslednji put izmenjeno pre 26 minuta. 130 reči do sad.</p>
-          </div>
-          <div>
-            <span class="material-icons-outlined mr-2 is-clickable">published_with_changes</span>
-            <span class="material-icons-outlined mr-2 is-clickable">edit</span>
-            <span class="material-icons-outlined mr-2 is-clickable">delete_outline</span>
-          </div>
-        </li>
+        <?php foreach ($posts as $post) :?>
+          <li>
+            <div class="is-flex-grow-1">
+              <h3 class="title is-5"><?= $post->title ?></h3>
+              <h4 class="subtitle is-6">Ovo je podnaslov, malo duzi, prva recenica teksta</h4>
+              <p class="is-size-7">Poslednji put izmenjeno pre 14 minuta. 124 reči do sad.</p>
+            </div>
+            <div>
+              <span class="material-icons-outlined mr-2 is-clickable">published_with_changes</span>
+              <span class="material-icons-outlined mr-2 is-clickable">edit</span>
+              <button class="material-icons-outlined mr-2 is-clickable" type="submit" form="post-delete-<?= $post->id ?>">
+                delete_outline
+              </button>
+            </div>
+            <form id="post-delete-<?= $post->id ?>" action="/posts/<?= $post->id ?>" method="POST">
+              <input type="hidden" name="_method" value="DELETE">
+            </form>
+          </li>
+        <?php endforeach ?>
       </ul>
       <div class="pagination is-centered" role="navigation" aria-label="pagination">
         <a class="pagination-previous">Previous</a>
