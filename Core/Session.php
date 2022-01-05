@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use App\Models\User;
+
 class Session {
 
     public function __construct()
@@ -17,6 +19,14 @@ class Session {
     public static function getUserId(): int
     {
         return $_SESSION['userId'] ?? false;
+    }
+
+    public static function getUser(): ?User
+    {
+        if (self::getUserId()) {
+            return User::fetchById(self::getUserId());
+        }
+        return null;
     }
 
     public static function login($userId): void

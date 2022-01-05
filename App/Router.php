@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controllers\CommentController;
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
 use App\Controllers\BlogController;
@@ -40,6 +41,7 @@ class Router {
             'GET:/' => [HomeController::class, 'index'],
             'POST:/login' => [AuthController::class, 'login'],
             'GET:/logout' => [AuthController::class, 'logout'],
+            'POST:/posts/*/comments' => [CommentController::class, 'store'],
             'DELETE:/posts/*' => [PostController::class, 'destroy'],
             'GET:/blogs' => [BlogController::class, 'index'],
             'GET:/blogs/*/posts' => [PostController::class, 'create'],

@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Libraries\Parsedown;
+use App\Models\Blog;
+use App\Models\Comment;
 use App\Models\Entity;
 use App\Models\Image;
 use App\Models\Post;
@@ -19,6 +21,11 @@ class PostController {
         $post = Post::select([
             [$column, '=', urldecode($slug)]
         ])[0];
+
+        $blog = Blog::fetchById($post->blogId);
+        $comments = Comment::select([
+            ['post_id', '=', $post->id],
+        ]);
 
         include('./Views/Post/Show.php');
     }
@@ -56,7 +63,7 @@ class PostController {
 
     public function destroy($id): void
     {
-        $blogId = Post::fetchById($id)[0]->blogId ?? null;
+        $blogId = Post::fetchById($id)->blogId ?? null;
         $deleteSuccessful = Post::delete($id);
         if ($deleteSuccessful) {
             Router::redirect("/blogs/$blogId");

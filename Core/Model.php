@@ -48,9 +48,9 @@ class Model {
         }, $rows);
     }
 
-    public static function fetchById($id): array
+    public static function fetchById($id): ?Model
     {
-        return self::select([['id', '=', $id]]);
+        return self::select([['id', '=', $id]])[0] ?? null;
     }
 
     public static function select($conditions): array
