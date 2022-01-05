@@ -1,5 +1,6 @@
 <?php
 // Initialize view variables
+$blogId = $blogId ?? 0;
 $posts = $posts ?? [];
 ?>
 
@@ -50,6 +51,10 @@ $posts = $posts ?? [];
         min-height: 100px;
         padding: 2em 4em;
         border-bottom: 1px solid #e6e6e6;
+    }
+
+    .post-list li .title {
+        text-decoration: underline;
     }
 
     .material-icons-outlined {
@@ -119,7 +124,7 @@ $posts = $posts ?? [];
   <div class="container">
     <h1 class="title is-flex is-justify-content-space-between">
       Tvoje priče
-      <a class="button is-success is-rounded is-outlined" href="/blogs/5/posts">
+      <a class="button is-success is-rounded is-outlined" href="/blogs/<?= $blogId ?>/posts">
         Napiši priču
       </a>
     </h1>
@@ -138,7 +143,9 @@ $posts = $posts ?? [];
         <?php foreach ($posts as $post) :?>
           <li>
             <div class="is-flex-grow-1">
-              <h3 class="title is-5"><?= $post->title ?></h3>
+              <a class="title is-5 is-block" href="/<?= $post->slug ?>" target="_blank">
+                <?= $post->title ?>
+              </a>
               <h4 class="subtitle is-6">Ovo je podnaslov, malo duzi, prva recenica teksta</h4>
               <p class="is-size-7">Poslednji put izmenjeno pre 14 minuta. 124 reči do sad.</p>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Blog;
+use App\Models\Entity;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Router;
@@ -30,8 +31,10 @@ class BlogController {
 
     public function store(Request $request): void
     {
+        $entityId = Entity::create([]);
         $blogId = Blog::create(array_merge(
             [
+                'id' => $entityId,
                 'owner_id' => Session::getUserId()
             ],
             $request->only(['name', 'description'])

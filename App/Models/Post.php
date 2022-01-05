@@ -11,6 +11,7 @@ class Post extends Model {
     public $id;
     public $blogId;
     public $userId;
+    public $slug;
     public $title;
     public $text;
     public $htmlText;
@@ -28,6 +29,7 @@ class Post extends Model {
             $post->id = $row['id'];
             $post->blogId = $row['blog_id'];
             $post->userId = $row['user_id'];
+            $post->slug = $row['slug'];
             $post->title = $row['title'];
             $post->text = $row['text'];
             $post->htmlText = $row['html_text'];

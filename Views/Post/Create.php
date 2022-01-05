@@ -1,3 +1,9 @@
+<?php
+// Initialize view variables
+$blogId = $blogId ?? 0;
+$images = $images ?? [];
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -124,6 +130,7 @@
     }
 
     .image-card {
+        position: relative;
         flex-basis: calc((100% - 3em) / 3);
         margin: 0.5em;
         padding: 0.5em;
@@ -131,11 +138,28 @@
         text-align: center;
     }
 
-    .image-card img:hover {
-        position: relative;
-        transform: scale(2);
-        transition: transform .2s linear;
-        z-index: 10;
+    .image-card .image-card-delete {
+        display: none;
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
+        cursor: pointer;
+    }
+
+    .image-card:hover .image-card-delete {
+        display: block;
+    }
+
+    .image-card .image-copy-icon {
+        color: initial;
+    }
+
+    .image-card .file {
+        height: 100%;
+        align-items: center;
+    }
+    .image-card .file.is-boxed .file-cta {
+        padding: 1rem;
     }
   </style>
 </head>
@@ -206,7 +230,7 @@
   </div>
   <div class="container">
     <section class="section">
-      <form class="post-form" id="post-form" method="POST" action="/blogs/1/posts">
+      <form class="post-form" id="post-form" method="POST" action="/blogs/<?= $blogId ?>/posts">
         <div class="field is-horizontal">
 <!--          <div class="field-label is-large">-->
 <!--            <label class="label" for="title">Naslov</label>-->
@@ -305,49 +329,45 @@
   <div class="modal-card">
     <section class="modal-card-body py-6">
       <div class="image-card">
-        <img src="https://picsum.photos/100?random=1" />
-        <p class="control has-icons-right">
-          <input class="input is-small" type="text" value="https://blogers.rasko-dev.website/images/rwe54wwsefsww34432.png" readonly />
-          <span class="icon is-small is-right">
-            <span class="material-icons-outlined is-clickable" style="color: initial" title="Kopiraj">
-              content_copy
+        <div class="file is-boxed is-centered">
+          <form id="image-form" enctype="multipart/form-data" action="/images" method="POST">
+            <!--Frontend validation for max image size, in bytes-->
+            <input type="hidden" name="MAX_FILE_SIZE" value="5000000" />
+            <input type="hidden" name="blog" value="<?= $blogId ?>">
+            <label class="file-label">
+              <input id="image-input" class="file-input" type="file" name="images[]" multiple accept="image/*">
+              <span class="file-cta">
+              <span class="file-icon">
+                <span class="material-icons-outlined">photo_camera</span>
+              </span>
+              <span class="file-label">
+                Dodaj sliku
+              </span>
             </span>
-          </span>
-        </p>
+            </label>
+          </form>
+        </div>
       </div>
-      <div class="image-card">
-        <img src="https://picsum.photos/100?random=2" />
-        <p class="control has-icons-right">
-          <input class="input is-small" type="text" value="https://blogers.rasko-dev.website/images/rwe54wwsefsww34432.png" readonly />
-          <span class="icon is-small is-right">
-            <span class="material-icons-outlined is-clickable" style="color: initial" title="Kopiraj">
-              content_copy
+      <?php foreach ($images as $image) :?>
+        <div class="image-card">
+          <span class="material-icons-outlined image-card-delete">close</span>
+          <img src="/storage/images/<?= $image->storageUuid ?>" alt="slika_<?= $image->name ?>" />
+          <p class="control has-icons-right">
+            <input
+              id="url-input-<?= $image->id ?>"
+              class="input is-small"
+              type="text"
+              value="![slika_<?= $image->name ?>](/storage/images/<?= $image->storageUuid ?>)"
+              readonly
+            />
+            <span class="icon is-small is-right">
+              <span class="material-icons-outlined is-clickable image-copy-icon" title="Kopiraj" data-image="<?= $image->id ?>">
+                content_copy
+              </span>
             </span>
-          </span>
-        </p>
-      </div>
-      <div class="image-card">
-        <img src="https://picsum.photos/100?random=3" />
-        <p class="control has-icons-right">
-          <input class="input is-small" type="text" value="https://blogers.rasko-dev.website/images/rwe54wwsefsww34432.png" readonly />
-          <span class="icon is-small is-right">
-            <span class="material-icons-outlined is-clickable" style="color: initial" title="Kopiraj">
-              content_copy
-            </span>
-          </span>
-        </p>
-      </div>
-      <div class="image-card">
-        <img src="https://picsum.photos/100?random=4" />
-        <p class="control has-icons-right">
-          <input class="input is-small" type="text" value="https://blogers.rasko-dev.website/images/rwe54wwsefsww34432.png" readonly />
-          <span class="icon is-small is-right">
-            <span class="material-icons-outlined is-clickable" style="color: initial" title="Kopiraj">
-              content_copy
-            </span>
-          </span>
-        </p>
-      </div>
+          </p>
+        </div>
+      <?php endforeach ?>
     </section>
   </div>
 </div>
@@ -370,6 +390,15 @@
     const closeImageModal = () => {
       $("#image-modal").removeClass("is-active");
     };
+
+    $(".image-copy-icon").click((event) => {
+      const imageId = event.target.dataset.image;
+      $(`#url-input-${imageId}`).select();
+      document.execCommand("copy");
+    });
+
+    // Automatically submit image form once user selects the file
+    $('#image-input').change(() => $('#image-form').submit());
 
     $("#image-modal-background").click(closeImageModal);
     $("#image-modal-close").click(closeImageModal);

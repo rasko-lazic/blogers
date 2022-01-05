@@ -5,6 +5,7 @@ namespace App;
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
 use App\Controllers\BlogController;
+use App\Controllers\ImageController;
 use App\Controllers\PostController;
 use Core\Request;
 
@@ -46,6 +47,7 @@ class Router {
             'POST:/blogs' => [BlogController::class, 'store'],
             'PUT:/blogs/*' => [BlogController::class, 'update'],
             'DELETE:/blogs/*' => [BlogController::class, 'destroy'],
+            'POST:/images' => [ImageController::class, 'store'],
             'POST:/blogs/*/posts' => [PostController::class, 'store'],
             'GET:/*' => [PostController::class, 'show'],
         ];

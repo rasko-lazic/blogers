@@ -16,6 +16,7 @@ $post = $post ?? null;
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@creativebulma/bulma-tagsinput@1.0.3/dist/css/bulma-tagsinput.min.css">
   <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -54,6 +55,13 @@ $post = $post ?? null;
         min-width: 30em;
         max-width: 42em;
     }
+
+      .post-container .title {
+          font-family: 'Libre Baskerville', serif;
+          font-size: 2.5rem;
+          font-weight: normal;
+          margin-bottom: 2rem;
+      }
 
     .post-container h1,
     .post-container h2,
@@ -252,8 +260,8 @@ $post = $post ?? null;
 <section class="section">
   <div class="post-container">
     <div class="wrapper">
-      <h1 class="title size-1 mt-0"><?php echo $post->title ?? '' ?></h1>
-      <?php echo $post->htmlText ?? 'Post is missing' ?>
+      <h1 class="title size-1 mt-0"><?= $post->title ?? '' ?></h1>
+      <?= $post->htmlText ?? 'Post is missing' ?>
       <div class="action-container">
         <span class="is-inline-flex is-align-items-center mr-4">
           <span class="material-icons-outlined is-size-3 is-clickable mr-2">favorite_border</span> 12
