@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controllers\AdminController;
 use App\Controllers\CommentController;
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
@@ -43,6 +44,7 @@ class Router {
             'GET:/logout' => [AuthController::class, 'logout'],
             'POST:/posts/*/comments' => [CommentController::class, 'store'],
             'DELETE:/posts/*' => [PostController::class, 'destroy'],
+            'GET:/admin' => [AdminController::class, 'index'],
             'GET:/blogs' => [BlogController::class, 'index'],
             'GET:/blogs/*/posts' => [PostController::class, 'create'],
             'GET:/blogs/*' => [BlogController::class, 'show'],

@@ -58,10 +58,10 @@
         <article>
           <div class="is-flex is-align-items-center">
             <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
+            <span class="is-size-7">Stefan Bozejac</span>
           </div>
-          <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <p class="is-size-7">26.03.2021</p>
+          <p class="mb-2">Zašto više nikad neću kupiti Samsung telefon</p>
+          <p class="is-size-7">25.03.2022</p>
         </article>
       </div>
       <div class="tile is-4 is-flex">
@@ -69,10 +69,10 @@
         <article>
           <div class="is-flex is-align-items-center">
             <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
+            <span class="is-size-7">Petar Laganin</span>
           </div>
-          <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <p class="is-size-7">26.03.2021</p>
+          <p class="mb-2">Nikad nije prekasno za vežbanje</p>
+          <p class="is-size-7">12.03.2022</p>
         </article>
       </div>
       <div class="tile is-4 is-flex">
@@ -80,10 +80,10 @@
         <article>
           <div class="is-flex is-align-items-center">
             <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
+            <span class="is-size-7">Milan Zdravković</span>
           </div>
-          <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <p class="is-size-7">26.03.2021</p>
+          <p class="mb-2">Koje poslove izostaviti sa rezimea</p>
+          <p class="is-size-7">21.03.2022</p>
         </article>
       </div>
     </div>
@@ -93,10 +93,10 @@
         <article>
           <div class="is-flex is-align-items-center">
             <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
+            <span class="is-size-7">Jelena Jovanović</span>
           </div>
-          <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <p class="is-size-7">26.03.2021</p>
+          <p class="mb-2">Kako platiti porez za prihode od kripto valuta?</p>
+          <p class="is-size-7">18.03.2022</p>
         </article>
       </div>
       <div class="tile is-4 is-flex">
@@ -104,10 +104,10 @@
         <article>
           <div class="is-flex is-align-items-center">
             <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
+            <span class="is-size-7">Slavica Ignjatov</span>
           </div>
-          <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <p class="is-size-7">26.03.2021</p>
+          <p class="mb-2">Kako izvući maksimum iz lošeg poslovnog sastanka</p>
+          <p class="is-size-7">19.03.2022</p>
         </article>
       </div>
       <div class="tile is-4 is-flex">
@@ -117,8 +117,8 @@
             <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
             <span class="is-size-7">Milan Milanov</span>
           </div>
-          <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <p class="is-size-7">26.03.2021</p>
+          <p class="mb-2">Recikliranje - zla iluzija</p>
+          <p class="is-size-7">26.03.2022</p>
         </article>
       </div>
     </div>
