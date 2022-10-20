@@ -15,7 +15,7 @@ class Model {
         $this->db = Database::getInstance();
     }
 
-    protected function runQuery($query, $bindings, $returnRowCount = false)
+    public function runQuery($query, $bindings, $returnRowCount = false)
     {
         $stmt = $this->db->prepare($query);
         $stmt->execute($bindings);

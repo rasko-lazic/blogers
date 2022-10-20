@@ -1,3 +1,9 @@
+<?php
+// Initialize view variables
+$topPosts = $topPosts ?? [];
+$latestPosts = $latestPosts ?? [];
+?>
+
 <!DOCTYPE html>
 <html>
 <?php include("./Views/Partials/Meta.php") ?>
@@ -53,289 +59,63 @@
   <div class="container is-max-widescreen">
     <h3 class="mb-4 is-size-5 has-text-weight-semibold is-uppercase">Najpopularnije na Bloge.rs</h3>
     <div class="tile mb-4">
-      <div class="tile is-4 is-flex">
-        <div class="ordinal">01</div>
-        <article>
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Stefan Bozejac</span>
+      <?php for ($i = 1; $i < 4; $i++) :?>
+        <?php if (isset($topPosts[$i - 1])) :?>
+          <div class="tile is-4 is-flex">
+            <div class="ordinal"><?= "0$i" ?></div>
+            <article>
+              <div class="is-flex is-align-items-center">
+                <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
+                <span class="is-size-7">Stefan Bozejac</span>
+              </div>
+              <p class="mb-2"><?= $topPosts[$i - 1]->title ?></p>
+              <p class="is-size-7"><?= $topPosts[$i - 1]->createdAt ?></p>
+            </article>
           </div>
-          <p class="mb-2">Zašto više nikad neću kupiti Samsung telefon</p>
-          <p class="is-size-7">25.03.2022</p>
-        </article>
-      </div>
-      <div class="tile is-4 is-flex">
-        <div class="ordinal">02</div>
-        <article>
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Petar Laganin</span>
-          </div>
-          <p class="mb-2">Nikad nije prekasno za vežbanje</p>
-          <p class="is-size-7">12.03.2022</p>
-        </article>
-      </div>
-      <div class="tile is-4 is-flex">
-        <div class="ordinal">03</div>
-        <article>
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Zdravković</span>
-          </div>
-          <p class="mb-2">Koje poslove izostaviti sa rezimea</p>
-          <p class="is-size-7">21.03.2022</p>
-        </article>
-      </div>
+        <?php endif ?>
+      <?php endfor ?>
     </div>
     <div class="tile">
-      <div class="tile is-4 is-flex">
-        <div class="ordinal">04</div>
-        <article>
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Jelena Jovanović</span>
+      <?php for ($i = 4; $i < 7; $i++) :?>
+        <?php if (isset($topPosts[$i - 1])) :?>
+          <div class="tile is-4 is-flex">
+            <div class="ordinal"><?= "0$i" ?></div>
+            <article>
+              <div class="is-flex is-align-items-center">
+                <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
+                <span class="is-size-7">Stefan Bozejac</span>
+              </div>
+              <p class="mb-2"><?= $topPosts[$i - 1]->title ?></p>
+              <p class="is-size-7">25.03.2022</p>
+            </article>
           </div>
-          <p class="mb-2">Kako platiti porez za prihode od kripto valuta?</p>
-          <p class="is-size-7">18.03.2022</p>
-        </article>
-      </div>
-      <div class="tile is-4 is-flex">
-        <div class="ordinal">05</div>
-        <article>
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Slavica Ignjatov</span>
-          </div>
-          <p class="mb-2">Kako izvući maksimum iz lošeg poslovnog sastanka</p>
-          <p class="is-size-7">19.03.2022</p>
-        </article>
-      </div>
-      <div class="tile is-4 is-flex">
-        <div class="ordinal">06</div>
-        <article>
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2">Recikliranje - zla iluzija</p>
-          <p class="is-size-7">26.03.2022</p>
-        </article>
-      </div>
+        <?php endif ?>
+      <?php endfor ?>
     </div>
   </div>
 </section>
 <section class="section articles">
   <div class="columns is-align-items-flex-start">
     <div class="column is-two-thirds px-6">
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
+      <?php foreach ($latestPosts as $post) :?>
+        <div class="article is-flex">
+          <div class="is-flex-grow-1">
+            <div class="is-flex is-align-items-center">
+              <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
+              <span class="is-size-7">Milan Milanov</span>
+            </div>
+            <p class="mb-2 is-size-5 has-text-weight-bold"><?= $post->title ?></p>
+            <p class="is-size-6 mb-4"><?= strtok($post->text,  '.') ?></p>
+            <div class="is-flex is-justify-content-space-between">
+              <p class="is-size-7"><?= $post->createdAt ?></p>
+              <span class="material-icons-outlined is-clickable">bookmark_border</span>
+            </div>
           </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
+          <figure class="image is-flex-shrink-0 ml-4">
+            <img id="post-preview-<?= $post->id ?>" src="https://picsum.photos/200/120?random=<?= $post->id ?>" alt="post preview" />
+          </figure>
         </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
-        </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
-        </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
-        </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
-        </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
-        </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
-        </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
-        </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
-        </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
-        </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
-      <div class="article is-flex">
-        <div class="is-flex-grow-1">
-          <div class="is-flex is-align-items-center">
-            <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-            <span class="is-size-7">Milan Milanov</span>
-          </div>
-          <p class="mb-2 is-size-5 has-text-weight-bold">7 mejlova koje treba da šaljete svake nedelje</p>
-          <p class="is-size-6 mb-4">
-            Sakrivena moć vašeg inboksa
-          </p>
-          <div class="is-flex is-justify-content-space-between">
-            <p class="is-size-7">26.03.2021</p>
-            <span class="material-icons-outlined is-clickable">bookmark_border</span>
-          </div>
-        </div>
-        <figure class="image ml-6">
-          <img src="assets/image/article.jpg" alt="article preview">
-        </figure>
-      </div>
+      <?php endforeach ?>
     </div>
     <div class="column categories">
       <p class="mb-4 has-text-weight-bold is-uppercase">Otkrijte šta vas interesuje</p>

@@ -1,3 +1,57 @@
+<?php
+// Initialize view variables
+$users = [
+    [
+        'id' => 1,
+        'firstname' => 'Rasko',
+        'lastname' => 'Lazic',
+        'username' => 'rasko_lazic',
+        'email' => 'rasko@test.com',
+        'created_at' => '2022-04-21',
+    ],
+    [
+        'id' => 2,
+        'firstname' => 'Jelena',
+        'lastname' => 'Stefanovic',
+        'username' => 'test_nalog',
+        'email' => 'jelena@gmail.com',
+        'created_at' => '2022-05-18',
+    ],
+    [
+        'id' => 3,
+        'firstname' => 'Zeljko',
+        'lastname' => 'Jovanovic',
+        'username' => 'zeljko_jovanovic',
+        'email' => 'zeljko@test.com',
+        'created_at' => '2022-03-12',
+    ],
+    [
+        'id' => 4,
+        'firstname' => 'Milan',
+        'lastname' => 'Milanovic',
+        'username' => 'milan_90',
+        'email' => 'milan@test.com',
+        'created_at' => '2022-02-18',
+    ],
+    [
+        'id' => 5,
+        'firstname' => 'Marija',
+        'lastname' => 'Stulic',
+        'username' => 'marija_beograd',
+        'email' => 'marija@test.com',
+        'created_at' => '2022-03-19',
+    ],
+    [
+        'id' => 6,
+        'firstname' => 'Dejan',
+        'lastname' => 'Taranovic',
+        'username' => 'taran',
+        'email' => 'dejan@test.com',
+        'created_at' => '2022-01-07',
+    ],
+];
+?>
+
 <!DOCTYPE html>
 <html>
 <?php include("./Views/Partials/Meta.php") ?>
@@ -11,210 +65,195 @@
           <p class="panel-heading">
             Admin sekcija
           </p>
-          <a class="panel-block is-active">
+          <a id="user-panel" class="panel-block is-active">
             <i class="panel-icon material-icons-outlined">group</i> Korisnici
           </a>
-          <a class="panel-block">
+          <a id="blog-panel" class="panel-block">
             <i class="panel-icon material-icons-outlined">menu_book</i> Blogovi
           </a>
-          <a class="panel-block">
+          <a id="post-panel" class="panel-block">
             <i class="panel-icon material-icons-outlined">post_add</i> Blog unosi
           </a>
-          <a class="panel-block">
+          <a id="comment-panel" class="panel-block">
             <i class="panel-icon material-icons-outlined">forum</i> Komentari
           </a>
         </article>
       </div>
       <div class="column">
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <table id="user-table" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
           <thead>
           <tr>
-            <th><abbr title="Position">Pos</abbr></th>
-            <th>Team</th>
-            <th><abbr title="Played">Pld</abbr></th>
-            <th><abbr title="Won">W</abbr></th>
-            <th><abbr title="Drawn">D</abbr></th>
-            <th><abbr title="Lost">L</abbr></th>
-            <th><abbr title="Goals for">GF</abbr></th>
-            <th><abbr title="Goals against">GA</abbr></th>
-            <th><abbr title="Goal difference">GD</abbr></th>
-            <th><abbr title="Points">Pts</abbr></th>
-            <th>Qualification or relegation</th>
+            <th>ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Created at</th>
+            <th>Actions</th>
           </tr>
           </thead>
           <tfoot>
           <tr>
-            <th><abbr title="Position">Pos</abbr></th>
-            <th>Team</th>
-            <th><abbr title="Played">Pld</abbr></th>
-            <th><abbr title="Won">W</abbr></th>
-            <th><abbr title="Drawn">D</abbr></th>
-            <th><abbr title="Lost">L</abbr></th>
-            <th><abbr title="Goals for">GF</abbr></th>
-            <th><abbr title="Goals against">GA</abbr></th>
-            <th><abbr title="Goal difference">GD</abbr></th>
-            <th><abbr title="Points">Pts</abbr></th>
-            <th>Qualification or relegation</th>
+            <th>ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Created at</th>
+            <th>Actions</th>
+          </tr>
+          </tfoot>
+          <tbody>
+          <?php foreach ($users as $user) :?>
+            <tr>
+              <th><?= $user['id'] ?></th>
+              <td><?= $user['firstname'] ?></td>
+              <td><?= $user['lastname'] ?></td>
+              <td><?= $user['username'] ?></td>
+              <td><?= $user['email'] ?></td>
+              <td><?= $user['created_at'] ?></td>
+              <td>
+                <button class="material-icons-outlined is-clickable mr-4">
+                  edit
+                </button>
+                <button class="material-icons-outlined is-clickable">
+                  delete_outline
+                </button>
+              </td>
+            </tr>
+          <?php endforeach ?>
+          </tbody>
+        </table>
+
+        <table id="blog-table" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="display: none">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Tags</th>
+            <th>Owned by</th>
+            <th>Created at</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tfoot>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Tags</th>
+            <th>Owned by</th>
+            <th>Created at</th>
+            <th>Actions</th>
           </tr>
           </tfoot>
           <tbody>
           <tr>
             <th>1</th>
-            <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
+            <td>Test Blog</td>
+            <td>This is a test description for test blog</td>
+            <td>
+              <div class="tags are-small">
+                <span class="tag">Veze</span>
+                <span class="tag">Produktivnost</span>
+                <span class="tag">Politika</span>
+                <span class="tag">Poznati</span>
+              </div>
             </td>
-            <td>38</td>
-            <td>23</td>
-            <td>12</td>
-            <td>3</td>
-            <td>68</td>
-            <td>36</td>
-            <td>+32</td>
-            <td>81</td>
-            <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Group_stage" title="2016–17 UEFA Champions League">Champions League group stage</a></td>
-          </tr>
-          <tr>
-            <th>2</th>
-            <td><a href="https://en.wikipedia.org/wiki/Arsenal_F.C." title="Arsenal F.C.">Arsenal</a></td>
-            <td>38</td>
-            <td>20</td>
-            <td>11</td>
-            <td>7</td>
-            <td>65</td>
-            <td>36</td>
-            <td>+29</td>
-            <td>71</td>
-            <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Group_stage" title="2016–17 UEFA Champions League">Champions League group stage</a></td>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td><a href="https://en.wikipedia.org/wiki/Tottenham_Hotspur_F.C." title="Tottenham Hotspur F.C.">Tottenham Hotspur</a></td>
-            <td>38</td>
-            <td>19</td>
-            <td>13</td>
-            <td>6</td>
-            <td>69</td>
-            <td>35</td>
-            <td>+34</td>
-            <td>70</td>
-            <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Group_stage" title="2016–17 UEFA Champions League">Champions League group stage</a></td>
-          </tr>
-          <tr class="is-selected">
-            <th>4</th>
-            <td><a href="https://en.wikipedia.org/wiki/Manchester_City_F.C." title="Manchester City F.C.">Manchester City</a></td>
-            <td>38</td>
-            <td>19</td>
-            <td>9</td>
-            <td>10</td>
-            <td>71</td>
-            <td>41</td>
-            <td>+30</td>
-            <td>66</td>
-            <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Play-off_round" title="2016–17 UEFA Champions League">Champions League play-off round</a></td>
-          </tr>
-          <tr>
-            <th>7</th>
-            <td><a href="https://en.wikipedia.org/wiki/West_Ham_United_F.C." title="West Ham United F.C.">West Ham United</a></td>
-            <td>38</td>
-            <td>16</td>
-            <td>14</td>
-            <td>8</td>
-            <td>65</td>
-            <td>51</td>
-            <td>+14</td>
-            <td>62</td>
-            <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Europa_League#Third_qualifying_round" title="2016–17 UEFA Europa League">Europa League third qualifying round</a></td>
-          </tr>
-          <tr>
-            <th>8</th>
-            <td><a href="https://en.wikipedia.org/wiki/Liverpool_F.C." title="Liverpool F.C.">Liverpool</a></td>
-            <td>38</td>
-            <td>16</td>
-            <td>12</td>
-            <td>10</td>
-            <td>63</td>
-            <td>50</td>
-            <td>+13</td>
-            <td>60</td>
-            <td></td>
-          </tr>
-          <tr>
-            <th>9</th>
-            <td><a href="https://en.wikipedia.org/wiki/Stoke_City_F.C." title="Stoke City F.C.">Stoke City</a></td>
-            <td>38</td>
-            <td>14</td>
-            <td>9</td>
-            <td>15</td>
-            <td>41</td>
-            <td>55</td>
-            <td>−14</td>
-            <td>51</td>
-            <td></td>
-          </tr>
-          <tr>
-            <th>10</th>
-            <td><a href="https://en.wikipedia.org/wiki/Chelsea_F.C." title="Chelsea F.C.">Chelsea</a></td>
-            <td>38</td>
-            <td>12</td>
-            <td>14</td>
-            <td>12</td>
-            <td>59</td>
-            <td>53</td>
-            <td>+6</td>
-            <td>50</td>
-            <td></td>
-          </tr>
-          <tr>
-            <th>11</th>
-            <td><a href="https://en.wikipedia.org/wiki/Everton_F.C." title="Everton F.C.">Everton</a></td>
-            <td>38</td>
-            <td>11</td>
-            <td>14</td>
-            <td>13</td>
-            <td>59</td>
-            <td>55</td>
-            <td>+4</td>
-            <td>47</td>
-            <td></td>
-          </tr>
-          <tr>
-            <th>13</th>
-            <td><a href="https://en.wikipedia.org/wiki/Watford_F.C." title="Watford F.C.">Watford</a></td>
-            <td>38</td>
-            <td>12</td>
-            <td>9</td>
-            <td>17</td>
-            <td>40</td>
-            <td>50</td>
-            <td>−10</td>
-            <td>45</td>
-            <td></td>
-          </tr>
-          <tr>
-            <th>14</th>
-            <td><a href="https://en.wikipedia.org/wiki/West_Bromwich_Albion_F.C." title="West Bromwich Albion F.C.">West Bromwich Albion</a></td>
-            <td>38</td>
-            <td>10</td>
-            <td>13</td>
-            <td>15</td>
-            <td>34</td>
-            <td>48</td>
-            <td>−14</td>
-            <td>43</td>
-            <td></td>
-          </tr>
-          <tr>
-            <th>18</th>
-            <td><a href="https://en.wikipedia.org/wiki/Newcastle_United_F.C." title="Newcastle United F.C.">Newcastle United</a> <strong>(R)</strong>
+            <td>Rasko Lazic</td>
+            <td>2022-05-22</td>
+            <td>
+              <button class="material-icons-outlined is-clickable">
+                delete_outline
+              </button>
             </td>
-            <td>38</td>
-            <td>9</td>
-            <td>10</td>
-            <td>19</td>
-            <td>44</td>
-            <td>65</td>
-            <td>−21</td>
-            <td>37</td>
-            <td>Relegation to the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_Football_League_Championship" title="2016–17 Football League Championship">Football League Championship</a></td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table id="post-table" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="display: none">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Blog</th>
+            <th>Title</th>
+            <th>Comments enabled</th>
+            <th>Draft</th>
+            <th>Hidden</th>
+            <th>Owned by</th>
+            <th>Created at</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tfoot>
+          <tr>
+            <th>ID</th>
+            <th>Blog</th>
+            <th>Title</th>
+            <th>Comments enabled</th>
+            <th>Draft</th>
+            <th>Hidden</th>
+            <th>Owned by</th>
+            <th>Created at</th>
+            <th>Actions</th>
+          </tr>
+          </tfoot>
+          <tbody>
+          <tr>
+            <th>76</th>
+            <td>Test blog</td>
+            <td>Test post</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>Rasko Lazic</td>
+            <td>2022-05-14</td>
+            <td>
+              <button class="material-icons-outlined is-clickable">
+                delete_outline
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <table id="comment-table" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="display: none">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Post title</th>
+            <th>Text</th>
+            <th>Like count</th>
+            <th>Owned by</th>
+            <th>Created at</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tfoot>
+          <tr>
+            <th>ID</th>
+            <th>Post title</th>
+            <th>Text</th>
+            <th>Like count</th>
+            <th>Owned by</th>
+            <th>Created at</th>
+            <th>Actions</th>
+          </tr>
+          </tfoot>
+          <tbody>
+          <tr>
+            <th>27</th>
+            <td>Test post</td>
+            <td>This is a test comment</td>
+            <td>42</td>
+            <td>Rasko Lazic</td>
+            <td>2022-05-14</td>
+            <td>
+              <button class="material-icons-outlined is-clickable">
+                delete_outline
+              </button>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -223,6 +262,26 @@
   </div>
 </section>
 </body>
+
+<script>
+  $(document).ready(() => {
+    const panelBlocks = $('.panel-block');
+    const tables = $('.table');
+
+    const setPanel = (panel) => {
+      panelBlocks.removeClass('is-active');
+      tables.hide();
+      $(`#${panel}-panel`).addClass('is-active');
+      $(`#${panel}-table`).show();
+      return true;
+    };
+
+    $('#user-panel').click(() => setPanel('user'));
+    $('#blog-panel').click(() => setPanel('blog'));
+    $('#post-panel').click(() => setPanel('post'));
+    $('#comment-panel').click(() => setPanel('comment'));
+  });
+</script>
 
 </html>
 
