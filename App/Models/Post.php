@@ -37,8 +37,8 @@ class Post extends Model {
             $post->commentsEnabled = $row['comments_enabled'];
             $post->isDraft = $row['is_draft'];
             $post->isHidden = $row['is_hidden'];
-            $post->createdAt = $row['created_at'];
-            $post->updatedAt = $row['updated_at'];
+            $post->createdAt = date('d/m/Y',strtotime($row['created_at']));
+            $post->updatedAt = date('d/m/Y',strtotime($row['updated_at']));
             return $post;
         }, $rows);
     }

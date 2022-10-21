@@ -9,8 +9,8 @@ class Request {
     // This object is constructed during routing process
     public function __construct()
     {
-        // Let's just make a snapshot of current state of $_POST
-        $this->parameters = $_POST;
+        // Let's just make a snapshot of current state of $_POST and $_GET
+        $this->parameters = array_merge($_GET, $_POST);
     }
 
     public function all(): array

@@ -81,7 +81,7 @@ class Router {
         [$controller, $method] = $action;
         $controller = new $controller();
         if (method_exists($controller, $method)) {
-            if (in_array($this->method, ['POST', 'PUT'])) {
+            if (in_array($this->method, ['GET', 'POST', 'PUT'])) {
                 $controller->$method(new Request(), $routeParameter);
             } else {
                 $controller->$method($routeParameter);

@@ -67,10 +67,12 @@ class Model {
                 return "$c[0] $c[1] $placeholder";
             }, $conditions)
         );
-        return (new static)->runQuery(
-            "SELECT * FROM $table WHERE $conditionString",
-            Helpers::array_flatten(array_column($conditions, 2))
-        );
+
+        $query = "SELECT * FROM $table";
+        if (strlen($conditionString) > 0) {
+            $query = "$query WHERE $conditionString";
+        }
+        return (new static)->runQuery($query, Helpers::array_flatten(array_column($conditions, 2)));
     }
 
     public static function create($parameters): string

@@ -2,6 +2,7 @@
 // Initialize view variables
 $topPosts = $topPosts ?? [];
 $latestPosts = $latestPosts ?? [];
+$tags = $tags ?? [];
 ?>
 
 <!DOCTYPE html>
@@ -58,40 +59,27 @@ $latestPosts = $latestPosts ?? [];
 <section class="section">
   <div class="container is-max-widescreen">
     <h3 class="mb-4 is-size-5 has-text-weight-semibold is-uppercase">Najpopularnije na Bloge.rs</h3>
-    <div class="tile mb-4">
-      <?php for ($i = 1; $i < 4; $i++) :?>
-        <?php if (isset($topPosts[$i - 1])) :?>
-          <div class="tile is-4 is-flex">
-            <div class="ordinal"><?= "0$i" ?></div>
-            <article>
-              <div class="is-flex is-align-items-center">
-                <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-                <span class="is-size-7">Stefan Bozejac</span>
+      <?php for ($i = 1; $i < 3; $i++) :?>
+        <div class="tile my-4">
+          <?php for ($j = 1; $j < 4; $j++) :?>
+            <?php if (isset($topPosts[$i * $j - 1])) :?>
+              <div class="tile is-4 is-flex">
+                <div class="ordinal"><?= str_pad($i * $j, 2, '0', STR_PAD_LEFT) ?></div>
+                <article>
+                  <div class="is-flex is-align-items-center">
+                    <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
+                    <span class="is-size-7">Stefan Bozejac</span>
+                  </div>
+                  <a class="is-inline-block mb-2 color-inherit" href="/<?= $topPosts[$i * $j - 1]->slug ?>">
+                      <?= $topPosts[$i * $j - 1]->title ?>
+                  </a>
+                  <p class="is-size-7"><?= $topPosts[$i * $j - 1]->createdAt ?></p>
+                </article>
               </div>
-              <p class="mb-2"><?= $topPosts[$i - 1]->title ?></p>
-              <p class="is-size-7"><?= $topPosts[$i - 1]->createdAt ?></p>
-            </article>
-          </div>
-        <?php endif ?>
+            <?php endif ?>
+          <?php endfor ?>
+        </div>
       <?php endfor ?>
-    </div>
-    <div class="tile">
-      <?php for ($i = 4; $i < 7; $i++) :?>
-        <?php if (isset($topPosts[$i - 1])) :?>
-          <div class="tile is-4 is-flex">
-            <div class="ordinal"><?= "0$i" ?></div>
-            <article>
-              <div class="is-flex is-align-items-center">
-                <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-                <span class="is-size-7">Stefan Bozejac</span>
-              </div>
-              <p class="mb-2"><?= $topPosts[$i - 1]->title ?></p>
-              <p class="is-size-7">25.03.2022</p>
-            </article>
-          </div>
-        <?php endif ?>
-      <?php endfor ?>
-    </div>
   </div>
 </section>
 <section class="section articles">
@@ -104,7 +92,9 @@ $latestPosts = $latestPosts ?? [];
               <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
               <span class="is-size-7">Milan Milanov</span>
             </div>
-            <p class="mb-2 is-size-5 has-text-weight-bold"><?= $post->title ?></p>
+            <a class="is-inline-block mb-2 is-size-5 has-text-weight-bold color-inherit" href="/<?= $post->slug ?>">
+                <?= $post->title ?>
+            </a>
             <p class="is-size-6 mb-4"><?= strtok($post->text,  '.') ?></p>
             <div class="is-flex is-justify-content-space-between">
               <p class="is-size-7"><?= $post->createdAt ?></p>
@@ -120,15 +110,11 @@ $latestPosts = $latestPosts ?? [];
     <div class="column categories">
       <p class="mb-4 has-text-weight-bold is-uppercase">Otkrijte šta vas interesuje</p>
       <div class="tags are-medium mb-5">
-        <span class="tag is-clickable">Veze</span>
-        <span class="tag is-clickable">Produktivnost</span>
-        <span class="tag is-clickable">Politika</span>
-        <span class="tag is-clickable">Poznati</span>
-        <span class="tag is-clickable">Zdravlje</span>
-        <span class="tag is-clickable">Programiranje</span>
-        <span class="tag is-clickable">Meditacija</span>
-        <span class="tag is-clickable">Moda</span>
-        <span class="tag is-clickable">Veštačka inteligencija</span>
+        <?php foreach ($tags as $tag) :?>
+          <a class="tag is-clickable capitalize" href="?tag=<?= $tag->id ?>">
+              <?= $tag->name ?>
+          </a>
+        <?php endforeach ?>
       </div>
     </div>
   </div>
@@ -217,6 +203,18 @@ $latestPosts = $latestPosts ?? [];
   };
   const closeRegisterModal = () => {
     $("#register-modal").removeClass("is-active");
+  };
+
+  // Restore scroll position after category filtering
+  document.addEventListener("DOMContentLoaded", () => {
+    let scrollPosition = localStorage.getItem('scrollPosition');
+    if (scrollPosition) {
+      window.scrollTo(0, +scrollPosition);
+    }
+  });
+
+  window.onbeforeunload = function() {
+    localStorage.setItem('scrollPosition', String(window.scrollY));
   };
 
   $(document).ready(() => {

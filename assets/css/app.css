@@ -6,6 +6,10 @@ body, button, input, optgroup, select, textarea {
     font-family: 'Lexend', 'Segoe UI', Roboto, 'Fira Sans', Helvetica, Arial, sans-serif;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
 .navbar {
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
 }
