@@ -14,6 +14,7 @@ class Blog extends Model {
     public $description;
     public $tags;
     public $ownerId;
+    public $user;
     public $createdAt;
     public $updatedAt;
 
@@ -32,6 +33,11 @@ class Blog extends Model {
         }
     }
 
+    private function getUser($id): ?User
+    {
+        return User::fetchById($id);
+    }
+
     public function formatDatabaseData($rows): array
     {
         return array_map(function ($row) {
@@ -41,6 +47,7 @@ class Blog extends Model {
             $blog->description = $row['description'];
             $blog->tags = $this->getTags($row['id']);
             $blog->ownerId = $row['owner_id'];
+            $blog->user = $this->getUser($row['owner_id']);
             $blog->createdAt = $row['created_at'];
             $blog->updatedAt = $row['updated_at'];
             return $blog;

@@ -12,20 +12,21 @@ class Post extends Model {
 
     public $id;
     public $blogId;
+    public $blog;
     public $userId;
+    public $user;
     public $slug;
     public $title;
     public $text;
     public $htmlText;
     public $headerImage;
     public $commentsEnabled;
+    public $isFavorite = false;
     public $isDraft;
     public $isHidden;
     public $createdAt;
     public $updatedAt;
 
-    public $isFavorite = false;
-    public $user = null;
 
     public function formatDatabaseData($rows): array
     {
@@ -33,6 +34,7 @@ class Post extends Model {
             $post = new Post();
             $post->id = $row['id'];
             $post->blogId = $row['blog_id'];
+            $post->blog = $this->getBlog($row['blog_id']);
             $post->userId = $row['user_id'];
             $post->user = $this->getUser($row['user_id']);
             $post->slug = $row['slug'];
@@ -41,9 +43,9 @@ class Post extends Model {
             $post->htmlText = $row['html_text'];
             $post->headerImage = $row['header_image'];
             $post->commentsEnabled = $row['comments_enabled'];
+            $post->isFavorite = $this->getIsFavorite($row['id']);
             $post->isDraft = $row['is_draft'];
             $post->isHidden = $row['is_hidden'];
-            $post->isFavorite = $this->getIsFavorite($row['id']);
             $post->createdAt = date('d/m/Y',strtotime($row['created_at']));
             $post->updatedAt = date('d/m/Y',strtotime($row['updated_at']));
             return $post;
@@ -60,5 +62,10 @@ class Post extends Model {
     private function getUser($id): ?User
     {
         return User::fetchById($id);
+    }
+
+    private function getBlog($id): ?Blog
+    {
+        return Blog::fetchById($id);
     }
 }

@@ -16,7 +16,7 @@ use Core\Session;
 
 class PostController {
 
-    public function show($slug): void
+    public function show(Request $request, $slug): void
     {
         // Fetching by id if integer is used instead of slug
         $column = is_numeric($slug) ? 'id' : 'slug';
