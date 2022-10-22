@@ -76,7 +76,6 @@ class PostController {
     {
         if (!Session::getUserId()) {
             Router::redirect(Helpers::getRefererPath());
-            return;
         }
         // MySQL actually ignores SELECT list when it's part of EXISTS subquery
         $query = Database::getInstance()->prepare('SELECT EXISTS (SELECT * FROM entity_like WHERE entity_id = :postId AND user_id = :userId)');

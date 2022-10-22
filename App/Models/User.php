@@ -14,6 +14,7 @@ class User extends Model {
     public $username;
     public $name;
     public $email;
+    public $isAdmin;
     public $createdAt;
     public $updatedAt;
     public $deletedAt;
@@ -28,6 +29,7 @@ class User extends Model {
             $user->name = "{$row['first_name']} {$row['last_name']}";
             $user->username = $row['username'];
             $user->email = $row['email'];
+            $user->isAdmin = $row['is_admin'];
             $user->createdAt = $row['created_at'];
             $user->updatedAt = $row['updated_at'];
             $user->deletedAt = $row['deleted_at'];

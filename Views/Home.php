@@ -31,7 +31,11 @@ $tags = $tags ?? [];
       <div class="navbar-item">
         <div class="buttons">
           <?php if (\Core\Session::check()) :?>
-            <a class="button" href="/blogs"><strong>Moji blogovi</strong></a>
+            <?php if (\Core\Session::getUser()->isAdmin) :?>
+              <a class="button" href="/admin"><strong>Admin sekcija</strong></a>
+            <?php else :?>
+              <a class="button" href="/blogs"><strong>Moji blogovi</strong></a>
+            <?php endif ?>
             <a class="button sign-up" href="/logout"><strong>Logout</strong></a>
           <?php else :?>
             <a id="register-button" class="button sign-up"><strong>Sign up</strong></a>
