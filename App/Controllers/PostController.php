@@ -32,7 +32,7 @@ class PostController {
         include('./Views/Post/Show.php');
     }
 
-    public function create($blogId): void
+    public function create(Request $request, $blogId): void
     {
         $images = Image::select([
             ['user_id', '=', Session::getUserId()]

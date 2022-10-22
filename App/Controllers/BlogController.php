@@ -21,7 +21,7 @@ class BlogController {
         include('./Views/Blog/Index.php');
     }
 
-    public function show($blogId): void
+    public function show(Request $request, $blogId): void
     {
         $posts = Post::select([
             ['blog_id', '=', $blogId]
@@ -32,7 +32,7 @@ class BlogController {
     public function store(Request $request): void
     {
         $entityId = Entity::create([]);
-        $blogId = Blog::create(array_merge(
+        Blog::create(array_merge(
             [
                 'id' => $entityId,
                 'owner_id' => Session::getUserId()
@@ -54,11 +54,11 @@ class BlogController {
                     $tagId = Tag::create(['name' => $tag]);
                 }
                 $query = Database::getInstance()->prepare("INSERT INTO blog_tag VALUES (?, ?)");
-                $query->execute([$blogId, $tagId]);
+                $query->execute([$entityId, $tagId]);
             }
         }
 
-        if ($blogId > 0) {
+        if ($entityId > 0) {
             Router::redirect('/blogs');
         }
     }

@@ -17,14 +17,12 @@ class AuthController {
         $email = $_POST['email'] ?? null;
         $password = $_POST['password'] ?? null;
 
-        if (is_null($email) || is_null($password)) {
-            throw new \Exception("Missing data");
+        try {
+            $user = $this->authenticate($email, $password);
+            Session::login($user->id);
+        } finally {
+            Router::redirect('/');
         }
-
-        $user = $this->authenticate($email, $password);
-
-        Session::login($user->id);
-        Router::redirect('/');
     }
 
     public function logout(): void

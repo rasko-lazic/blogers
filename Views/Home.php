@@ -140,7 +140,7 @@ $tags = $tags ?? [];
       <form id="login-form" method="POST" action="/login">
         <div class="field">
           <p class="control has-icons-left has-icons-right">
-            <input class="input" type="email" placeholder="Email" name="email">
+            <input class="input" type="email" required placeholder="Email" name="email">
             <span class="icon is-small is-left">
               <i class="material-icons-outlined">mail_outline</i>
             </span>
@@ -151,7 +151,7 @@ $tags = $tags ?? [];
         </div>
         <div class="field">
           <p class="control has-icons-left">
-            <input class="input" type="password" placeholder="Šifra" name="password">
+            <input class="input" type="password" required placeholder="Šifra" name="password">
             <span class="icon is-small is-left">
               <i class="material-icons-outlined">lock</i>
             </span>

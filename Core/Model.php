@@ -77,6 +77,7 @@ class Model {
 
     public static function create($parameters): string
     {
+        print_r("bla\n");
         $table = (new static)->table;
         $columns = join(', ', array_keys($parameters));
         $wildcards = join(', ', array_fill(0, count($parameters), '?'));
@@ -86,7 +87,9 @@ class Model {
             array_values($parameters)
         );
 
-        return (new static)->db->lastInsertId();
+        $test = (new static)->db->lastInsertId();
+
+        return $test;
     }
 
     public static function update($id, $parameters): bool
