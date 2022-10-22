@@ -4,7 +4,13 @@ namespace Core;
 
 class Helpers {
 
-    public static function array_flatten($array): array {
+    public static function getRefererPath(): ?string
+    {
+        return explode($_SERVER['SERVER_NAME'], $_SERVER['HTTP_REFERER'])[1] ?? null;
+    }
+
+    public static function array_flatten($array): array
+    {
         $return = [];
         foreach ($array as $key => $value) {
             if (is_array($value)) {

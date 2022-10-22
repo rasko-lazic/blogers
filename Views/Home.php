@@ -68,7 +68,7 @@ $tags = $tags ?? [];
                 <article>
                   <div class="is-flex is-align-items-center">
                     <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-                    <span class="is-size-7">Stefan Bozejac</span>
+                    <span class="is-size-7"><?= $topPosts[$i * $j - 1]->user->name ?></span>
                   </div>
                   <a class="is-inline-block mb-2 color-inherit" href="/<?= $topPosts[$i * $j - 1]->slug ?>">
                       <?= $topPosts[$i * $j - 1]->title ?>
@@ -90,7 +90,7 @@ $tags = $tags ?? [];
           <div class="is-flex-grow-1">
             <div class="is-flex is-align-items-center">
               <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-              <span class="is-size-7">Milan Milanov</span>
+              <span class="is-size-7"><?= $post->user->name ?></span>
             </div>
             <a class="is-inline-block mb-2 is-size-5 has-text-weight-bold color-inherit" href="/<?= $post->slug ?>">
                 <?= $post->title ?>
@@ -98,11 +98,17 @@ $tags = $tags ?? [];
             <p class="is-size-6 mb-4"><?= strtok($post->text,  '.') ?></p>
             <div class="is-flex is-justify-content-space-between">
               <p class="is-size-7"><?= $post->createdAt ?></p>
-              <span class="material-icons-outlined is-clickable">bookmark_border</span>
+              <?php if (\Core\Session::check()) :?>
+                <form action="/posts/favorite/<?= $post->id ?>" method="POST">
+                  <button class="material-icons-outlined is-clickable <?= $post->isFavorite ? 'is-favorite' : '' ?>">
+                    <?= $post->isFavorite ? 'bookmark_added' : 'bookmark_border' ?>
+                  </button>
+                </form>
+              <?php endif ?>
             </div>
           </div>
           <figure class="image is-flex-shrink-0 ml-4">
-            <img id="post-preview-<?= $post->id ?>" src="https://picsum.photos/200/120?random=<?= $post->id ?>" alt="post preview" />
+            <img id="post-preview-<?= $post->id ?>" src="https://picsum.photos/seed/<?= $post->id ?>/200/120?random=<?= $post->id ?>" alt="post preview" />
           </figure>
         </div>
       <?php endforeach ?>

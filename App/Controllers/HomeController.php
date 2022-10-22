@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use App\Models\Post;
 use App\Models\Tag;
+use Core\Database;
 use Core\Request;
+use Core\Session;
 
 class HomeController {
 
@@ -25,6 +27,7 @@ class HomeController {
                 ['tagId' => $requestedTag]
             );
         }
+
         include('./Views/Home.php');
     }
 }

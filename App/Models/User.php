@@ -12,6 +12,7 @@ class User extends Model {
     public $firstName;
     public $lastName;
     public $username;
+    public $name;
     public $email;
     public $createdAt;
     public $updatedAt;
@@ -24,6 +25,7 @@ class User extends Model {
             $user->id = $row['id'];
             $user->firstName = $row['first_name'];
             $user->lastName = $row['last_name'];
+            $user->name = "{$row['first_name']} {$row['last_name']}";
             $user->username = $row['username'];
             $user->email = $row['email'];
             $user->createdAt = $row['created_at'];

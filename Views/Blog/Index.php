@@ -12,7 +12,7 @@ $blogs = $blogs ?? [];
   <div class="container">
     <?php foreach ($blogs as $blog) :?>
       <div class="blog-line">
-        <img id="blog-logo-<?= $blog->id ?>" class="blog-line__logo" src="https://picsum.photos/100?blur=2&random=<?= $blog->id ?>" alt="blog_logo" />
+        <img id="blog-logo-<?= $blog->id ?>" class="blog-line__logo" src="https://picsum.photos/seed/<?= $blog->id ?>/100?blur=2&random=<?= $blog->id ?>" alt="blog_logo" />
         <div class="is-flex is-align-content-center is-flex-grow-1">
           <div class="mr-6">
             <p id="blog-title-<?= $blog->id ?>" class="is-size-4"><?= $blog->name ?></p>

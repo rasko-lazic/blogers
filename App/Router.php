@@ -42,6 +42,7 @@ class Router {
             'GET:/' => [HomeController::class, 'index'],
             'POST:/login' => [AuthController::class, 'login'],
             'GET:/logout' => [AuthController::class, 'logout'],
+            'POST:/posts/favorite/*' => [PostController::class, 'favorite'],
             'POST:/posts/*/comments' => [CommentController::class, 'store'],
             'DELETE:/posts/*' => [PostController::class, 'destroy'],
             'GET:/admin' => [AdminController::class, 'index'],

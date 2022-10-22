@@ -59,6 +59,10 @@ a:hover {
     transform: scale(1.2);
 }
 
+.material-icons-outlined.is-favorite {
+    color: #f59425;
+}
+
 .tab-body {
     display: none;
 }
