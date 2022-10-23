@@ -161,7 +161,7 @@ $comments = $comments ?? [];
               <tr>
                 <th><?= $post->id ?></th>
                 <td><?= $post->blog->name ?></td>
-                <td><?= $post->title ?></td>
+                <td><a href="/<?= $post->slug ?>" target="_blank"><?= $post->title ?></a></td>
                 <td><?= $post->slug ?></td>
                 <td><?= $post->commentsEnabled ?></td>
                 <td><?= $post->isDraft ?></td>

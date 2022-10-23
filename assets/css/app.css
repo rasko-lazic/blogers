@@ -10,6 +10,10 @@ a:hover {
     text-decoration: underline;
 }
 
+.material-icons-outlined {
+    text-decoration: none!important;
+}
+
 .navbar {
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
 }
@@ -109,6 +113,10 @@ button.material-icons-outlined {
     font-size: 1.125em;
 }
 
+.post-container p:has(img) {
+    text-align: center;
+}
+
 .post-container ul {
     list-style: inside;
     margin: 0.5em 1em;
@@ -203,7 +211,7 @@ button.material-icons-outlined {
 }
 
 .comment-input_expanded {
-    height: 10em;
+    height: 15rem;
 }
 
 .comment-input_expanded .comment-input__user,
@@ -383,6 +391,10 @@ button.material-icons-outlined {
     top: 5px;
     right: 5px;
     cursor: pointer;
+}
+
+.post-create .sidebar pre {
+    overflow: visible;
 }
 
 .post-create .sidebar blockquote {

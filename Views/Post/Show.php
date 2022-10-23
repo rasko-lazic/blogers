@@ -14,11 +14,39 @@ $comments = $comments ?? [];
   <div class="post-container">
     <div class="wrapper">
       <h1 class="title size-1 mt-0"><?= $post->title ?? '' ?></h1>
+      <div class="action-container has-text-right">
+        <?php if (\Core\Session::check()) :?>
+          <form class="is-inline-block mr-4" action="/posts/favorite/<?= $post->id ?>" method="POST">
+            <span class="is-inline-flex is-align-items-center">
+              <button class="material-icons-outlined is-clickable is-size-3 mr-2 <?= $post->isFavorite ? 'is-favorite' : '' ?>">
+                  <?= $post->isFavorite ? 'bookmark_added' : 'bookmark_border' ?>
+              </button><?= $post->favoriteCount ?>
+            </span>
+          </form>
+        <?php else :?>
+          <span class="is-inline-flex is-align-items-center mr-4">
+            <span class="material-icons-outlined is-size-3 mr-2">bookmark_border</span><?= $post->favoriteCount ?>
+          </span>
+        <?php endif ?>
+        <span class="is-inline-flex is-align-items-center mr-4">
+          <span id="sidebar-open" class="material-icons-outlined is-size-3 mr-2 is-clickable">forum</span><?= count($comments) ?>
+        </span>
+      </div>
       <?= $post->htmlText ?? 'Post is missing' ?>
       <div class="action-container">
-        <span class="is-inline-flex is-align-items-center mr-4">
-          <span class="material-icons-outlined is-size-3 is-clickable mr-2">favorite_border</span> 12
-        </span>
+          <?php if (\Core\Session::check()) :?>
+            <form class="is-inline-block mr-4" action="/posts/favorite/<?= $post->id ?>" method="POST">
+            <span class="is-inline-flex is-align-items-center">
+              <button class="material-icons-outlined is-clickable is-size-3 mr-2 <?= $post->isFavorite ? 'is-favorite' : '' ?>">
+                  <?= $post->isFavorite ? 'bookmark_added' : 'bookmark_border' ?>
+              </button><?= $post->favoriteCount ?>
+            </span>
+            </form>
+          <?php else :?>
+            <span class="is-inline-flex is-align-items-center mr-4">
+            <span class="material-icons-outlined is-size-3 mr-2">bookmark_border</span><?= $post->favoriteCount ?>
+          </span>
+          <?php endif ?>
         <span class="is-inline-flex is-align-items-center mr-4">
           <span id="sidebar-open" class="material-icons-outlined is-size-3 is-clickable">forum</span><?= count($comments) ?>
         </span>
@@ -30,9 +58,19 @@ $comments = $comments ?? [];
     <h3 class="subtitle is-6"><?= $blog->name ?? '' ?></h3>
     <p class="is-size-7"><?= $blog->description ?? '' ?></p>
     <div class="action-container">
-      <span class="is-inline-flex is-align-items-center mr-4">
-        <span class="material-icons-outlined is-size-3 is-clickable mr-2">favorite_border</span> 12
-      </span>
+        <?php if (\Core\Session::check()) :?>
+          <form class="is-inline-block mr-4" action="/posts/favorite/<?= $post->id ?>" method="POST">
+            <span class="is-inline-flex is-align-items-center">
+              <button class="material-icons-outlined is-clickable is-size-3 mr-2 <?= $post->isFavorite ? 'is-favorite' : '' ?>">
+                  <?= $post->isFavorite ? 'bookmark_added' : 'bookmark_border' ?>
+              </button><?= $post->favoriteCount ?>
+            </span>
+          </form>
+        <?php else :?>
+          <span class="is-inline-flex is-align-items-center mr-4">
+            <span class="material-icons-outlined is-size-3 mr-2">bookmark_border</span><?= $post->favoriteCount ?>
+          </span>
+        <?php endif ?>
       <span class="is-inline-flex is-align-items-center mr-4">
         <span id="sidebar-open-fast" class="material-icons-outlined is-size-3 is-clickable mr-2">forum</span><?= count($comments) ?>
       </span>
@@ -51,7 +89,7 @@ $comments = $comments ?? [];
       <div class="comment-input__user">
         <?= \Core\Session::getUser()->firstName ?>
       </div>
-      <form class="is-flex is-flex-direction-column" action="/posts/<?= $post->id ?>/comments" method="POST" >
+      <form class="is-flex is-flex-direction-column is-flex-grow-1" action="/posts/<?= $post->id ?>/comments" method="POST" >
         <textarea class="comment-input__textarea" placeholder="Podeli svoje mišljenje sa ostalima" name="text"></textarea>
         <div class="comment-input__actions has-text-right">
           <button id="comment-cancel" type="reset" class="button is-small is-rounded is-danger is-inverted mr-2">
@@ -96,6 +134,19 @@ $comments = $comments ?? [];
 </body>
 
 <script>
+
+  // Restore scroll position after favorite toggle
+  document.addEventListener("DOMContentLoaded", () => {
+    let scrollPosition = localStorage.getItem('scrollPosition');
+    if (scrollPosition) {
+      window.scrollTo(0, +scrollPosition);
+    }
+  });
+
+  window.onbeforeunload = function() {
+    localStorage.setItem('scrollPosition', String(window.scrollY));
+  };
+
   $(document).ready(() => {
 
     // If we are redirected after comment store, open comment sidebar

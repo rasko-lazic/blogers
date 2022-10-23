@@ -73,7 +73,7 @@ $images = $images ?? [];
   <p>Tekstove je moguće stilizovati uz pomoc Markdown sintakse.</p>
 
   <h6 class="title is-6 mt-4">Naslovi</h6>
-  <pre>
+  <pre class="mb-4">
     # Naslov veličine 1
     ## Naslov veličine 2
     ### Naslov veličine 3

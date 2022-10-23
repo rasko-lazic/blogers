@@ -21,7 +21,8 @@ class Post extends Model {
     public $htmlText;
     public $headerImage;
     public $commentsEnabled;
-    public $isFavorite = false;
+    public $isFavorite;
+    public $favoriteCount;
     public $isDraft;
     public $isHidden;
     public $createdAt;
@@ -44,6 +45,7 @@ class Post extends Model {
             $post->headerImage = $row['header_image'];
             $post->commentsEnabled = $row['comments_enabled'];
             $post->isFavorite = $this->getIsFavorite($row['id']);
+            $post->favoriteCount = $this->getFavoriteCount($row['id']);
             $post->isDraft = $row['is_draft'];
             $post->isHidden = $row['is_hidden'];
             $post->createdAt = date('d/m/Y',strtotime($row['created_at']));
@@ -57,6 +59,13 @@ class Post extends Model {
         $query = Database::getInstance()->prepare('SELECT EXISTS (SELECT * FROM entity_like WHERE entity_id = :postId AND user_id = :userId)');
         $query->execute(['postId' => $postId, 'userId' => Session::getUserId()]);
         return array_values($query->fetch())[0] ?? false;
+    }
+
+    private function getFavoriteCount($postId): int
+    {
+        $query = Database::getInstance()->prepare('SELECT count(*) FROM entity_like WHERE entity_id = :postId');
+        $query->execute(['postId' => $postId]);
+        return (int)array_values($query->fetch())[0] ?? 0;
     }
 
     private function getUser($id): ?User
