@@ -10,7 +10,8 @@ a:hover {
     text-decoration: underline;
 }
 
-.material-icons-outlined {
+.material-icons-outlined,
+.tab a {
     text-decoration: none!important;
 }
 

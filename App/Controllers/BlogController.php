@@ -23,8 +23,13 @@ class BlogController {
 
     public function show(Request $request, $blogId): void
     {
-        $posts = Post::select([
-            ['blog_id', '=', $blogId]
+        $draftPosts = Post::select([
+            ['blog_id', '=', $blogId],
+            ['is_draft', '=', 1],
+        ]);
+        $publishedPosts = Post::select([
+            ['blog_id', '=', $blogId],
+            ['is_draft', '=', 0],
         ]);
         include('./Views/Blog/Show.php');
     }
