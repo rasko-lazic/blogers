@@ -40,6 +40,7 @@ class Router {
     {
         return [
             'GET:/' => [HomeController::class, 'index'],
+            'POST:/register' => [AuthController::class, 'register'],
             'POST:/login' => [AuthController::class, 'login'],
             'GET:/logout' => [AuthController::class, 'logout'],
             'POST:/posts/favorite/*' => [PostController::class, 'favorite'],

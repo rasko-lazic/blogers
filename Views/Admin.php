@@ -135,9 +135,9 @@ $comments = $comments ?? [];
             <th>ID</th>
             <th>Blog</th>
             <th>Title</th>
+            <th>Slug</th>
             <th>Comments enabled</th>
             <th>Draft</th>
-            <th>Hidden</th>
             <th>Owned by</th>
             <th>Created at</th>
             <th>Actions</th>
@@ -148,9 +148,9 @@ $comments = $comments ?? [];
             <th>ID</th>
             <th>Blog</th>
             <th>Title</th>
+            <th>Slug</th>
             <th>Comments enabled</th>
             <th>Draft</th>
-            <th>Hidden</th>
             <th>Owned by</th>
             <th>Created at</th>
             <th>Actions</th>
@@ -162,9 +162,9 @@ $comments = $comments ?? [];
                 <th><?= $post->id ?></th>
                 <td><?= $post->blog->name ?></td>
                 <td><?= $post->title ?></td>
+                <td><?= $post->slug ?></td>
                 <td><?= $post->commentsEnabled ?></td>
                 <td><?= $post->isDraft ?></td>
-                <td><?= $post->isHidden ?></td>
                 <td><?= $post->user->name ?></td>
                 <td><?= $post->createdAt ?></td>
                 <td>

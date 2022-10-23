@@ -178,29 +178,55 @@ $tags = $tags ?? [];
       <p class="modal-card-title has-text-centered">Napravite nalog</p>
     </header>
     <section class="modal-card-body py-6">
-      <div class="field">
-        <p class="control has-icons-left has-icons-right">
-          <input class="input" type="email" placeholder="Email">
-          <span class="icon is-small is-left">
-            <i class="material-icons-outlined">mail_outline</i>
-          </span>
-          <span class="icon is-small is-right">
-            <i class="material-icons-outlined">done</i>
-          </span>
-        </p>
-      </div>
-      <div class="field">
-        <p class="control has-icons-left">
-          <input class="input" type="password" placeholder="Password">
-          <span class="icon is-small is-left">
-            <i class="material-icons-outlined">lock</i>
-          </span>
-        </p>
-      </div>
+      <form id="register-form" method="POST" action="/register">
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" name="firstName" required placeholder="Ime">
+            <span class="icon is-small is-left">
+              <i class="material-icons-outlined">person</i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" name="lastName" required placeholder="Prezime">
+            <span class="icon is-small is-left">
+              <i class="material-icons-outlined">person</i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="email" name="email" required placeholder="Email">
+            <span class="icon is-small is-left">
+              <i class="material-icons-outlined">mail_outline</i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="material-icons-outlined">done</i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="password" name="password" required placeholder="Šifra">
+            <span class="icon is-small is-left">
+              <i class="material-icons-outlined">lock</i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="password" name="passwordConfirmation" required placeholder="Potvrdi šifru">
+            <span class="icon is-small is-left">
+              <i class="material-icons-outlined">lock</i>
+            </span>
+          </p>
+        </div>
+      </form>
     </section>
     <footer class="modal-card-foot is-block">
-      <button class="button is-success is-fullwidth">
-        Register
+      <button class="button is-success is-fullwidth" type="submit" form="register-form">
+        Registracija
       </button>
     </footer>
   </div>

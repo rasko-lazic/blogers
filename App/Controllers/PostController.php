@@ -53,8 +53,9 @@ class PostController {
             'id' => $entityId,
             'blog_id' => $blogId,
             'user_id' => Session::getUserId(),
-            // In order to guarantee a unique slug, we add 10 random chars after the title
-            'slug' => str_replace(' ', '-', strtolower($title)) . '-' . bin2hex(random_bytes(5)),
+            // In order to guarantee a unique slug, we add 10 random chars after the title.
+            // Title gets converted to lowercase, all non-alphanumeric characters are removed, and finally, spaces are replaced with dashes
+            'slug' => str_replace(' ', '-', preg_replace("/[^A-Za-z0-9 ]/", '', strtolower($title))) . '-' . bin2hex(random_bytes(5)),
             'title' => $title,
             'text' => $request->get('content', ''),
             'html_text' => (new Parsedown)->text($request->get('content', '')),
