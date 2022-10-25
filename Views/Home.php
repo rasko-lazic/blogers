@@ -3,6 +3,7 @@
 $topPosts = $topPosts ?? [];
 $latestPosts = $latestPosts ?? [];
 $tags = $tags ?? [];
+$requestedTag = $requestedTag ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -63,21 +64,21 @@ $tags = $tags ?? [];
 <section class="section">
   <div class="container is-max-widescreen">
     <h3 class="mb-4 is-size-5 has-text-weight-semibold is-uppercase">Najpopularnije na Bloge.rs</h3>
-      <?php for ($i = 1; $i < 3; $i++) :?>
+      <?php for ($i = 0; $i < 2; $i++) :?>
         <div class="tile my-4">
-          <?php for ($j = 1; $j < 4; $j++) :?>
-            <?php if (isset($topPosts[$i * $j - 1])) :?>
+          <?php for ($j = 0; $j < 3; $j++) :?>
+            <?php if (isset($topPosts[3 * $i + $j])) :?>
               <div class="tile is-4 is-flex">
-                <div class="ordinal"><?= str_pad($i * $j, 2, '0', STR_PAD_LEFT) ?></div>
+                <div class="ordinal"><?= str_pad(3 * $i + $j + 1, 2, '0', STR_PAD_LEFT) ?></div>
                 <article>
                   <div class="is-flex is-align-items-center">
-                    <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
-                    <span class="is-size-7"><?= $topPosts[$i * $j - 1]->user->name ?></span>
+                    <img class="avatar" src="https://picsum.photos/seed/<?= $topPosts[3 * $i + $j]->user->id ?>/100?random=<?= $topPosts[3 * $i + $j]->user->id ?>" alt="user avatar">
+                    <span class="is-size-7"><?= $topPosts[3 * $i + $j]->user->name ?></span>
                   </div>
-                  <a class="is-inline-block mb-2 color-inherit" href="/<?= $topPosts[$i * $j - 1]->slug ?>">
-                      <?= $topPosts[$i * $j - 1]->title ?>
+                  <a class="is-inline-block mb-2 color-inherit" href="/<?= $topPosts[3 * $i + $j]->slug ?>">
+                      <?= $topPosts[3 * $i + $j]->title ?>
                   </a>
-                  <p class="is-size-7"><?= $topPosts[$i * $j - 1]->createdAt ?></p>
+                  <p class="is-size-7"><?= $topPosts[3 * $i + $j]->createdAt ?></p>
                 </article>
               </div>
             <?php endif ?>
@@ -93,7 +94,7 @@ $tags = $tags ?? [];
         <div class="article is-flex">
           <div class="is-flex-grow-1">
             <div class="is-flex is-align-items-center">
-              <img class="avatar" src="assets/image/avatar.png" alt="user avatar">
+              <img class="avatar" src="https://picsum.photos/seed/<?= $post->user->id ?>/100?random=<?= $post->user->id ?>" alt="user avatar">
               <span class="is-size-7"><?= $post->user->name ?></span>
             </div>
             <a class="is-inline-block mb-2 is-size-5 has-text-weight-bold color-inherit" href="/<?= $post->slug ?>">
@@ -121,7 +122,7 @@ $tags = $tags ?? [];
       <p class="mb-4 has-text-weight-bold is-uppercase">Otkrijte šta vas interesuje</p>
       <div class="tags are-medium mb-5">
         <?php foreach ($tags as $tag) :?>
-          <a class="tag is-clickable capitalize" href="?tag=<?= $tag->id ?>">
+          <a class="tag is-clickable capitalize <?= $tag->id == $requestedTag ? 'is-primary' : '' ?>" href="?tag=<?= $tag->id ?>">
               <?= $tag->name ?>
           </a>
         <?php endforeach ?>
@@ -243,14 +244,14 @@ $tags = $tags ?? [];
 
   // Restore scroll position after category filtering
   document.addEventListener("DOMContentLoaded", () => {
-    let scrollPosition = localStorage.getItem('scrollPosition');
+    let scrollPosition = localStorage.getItem('scrollPositionHome');
     if (scrollPosition) {
       window.scrollTo(0, +scrollPosition);
     }
   });
 
   window.onbeforeunload = function() {
-    localStorage.setItem('scrollPosition', String(window.scrollY));
+    localStorage.setItem('scrollPositionHome', String(window.scrollY));
   };
 
   $(document).ready(() => {

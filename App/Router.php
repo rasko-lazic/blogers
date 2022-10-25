@@ -45,6 +45,7 @@ class Router {
             'GET:/logout' => [AuthController::class, 'logout'],
             'POST:/posts/favorite/*' => [PostController::class, 'favorite'],
             'POST:/posts/*/comments' => [CommentController::class, 'store'],
+            'POST:/comments/favorite/*' => [CommentController::class, 'favorite'],
             'DELETE:/posts/*' => [PostController::class, 'destroy'],
             'GET:/admin' => [AdminController::class, 'index'],
             'DELETE:/admin/user/*' => [AdminController::class, 'userDestroy'],

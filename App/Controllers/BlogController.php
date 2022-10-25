@@ -45,23 +45,7 @@ class BlogController {
             $request->only(['name', 'description'])
         ));
 
-        $tags = explode(',', $request->get('tags', ''));
-        if (count($tags) > 0) {
-            foreach ($tags as $tag) {
-                if (strlen(trim($tag)) === 0) continue;
-                $storedTags = Tag::select([
-                    ['name', '=', $tag],
-                ]);
-
-                if (count($storedTags) > 0) {
-                    $tagId = $storedTags[0]->id;
-                } else {
-                    $tagId = Tag::create(['name' => $tag]);
-                }
-                $query = Database::getInstance()->prepare("INSERT INTO blog_tag VALUES (?, ?)");
-                $query->execute([$entityId, $tagId]);
-            }
-        }
+        $this->storeTags($entityId, explode(',', $request->get('tags', '')));
 
         if ($entityId > 0) {
             Router::redirect('/blogs');
@@ -72,27 +56,10 @@ class BlogController {
     {
         $updateSuccessful = Blog::update($id, $request->only(['name', 'description']));
 
-        $tags = explode(',', $request->get('tags', ''));
-
         $query = Database::getInstance()->prepare("DELETE FROM blog_tag WHERE blog_id = ?");
         $query->execute([$id]);
 
-        if (count($tags) > 0) {
-            foreach ($tags as $tag) {
-                if (strlen(trim($tag)) === 0) continue;
-                $storedTags = Tag::select([
-                    ['name', '=', $tag],
-                ]);
-
-                if (count($storedTags) > 0) {
-                    $tagId = $storedTags[0]->id;
-                } else {
-                    $tagId = Tag::create(['name' => $tag]);
-                }
-                $query = Database::getInstance()->prepare("INSERT INTO blog_tag VALUES (?, ?)");
-                $query->execute([$id, $tagId]);
-            }
-        }
+        $this->storeTags($id, explode(',', $request->get('tags', '')));
 
         if ($updateSuccessful) {
             Router::redirect('/blogs');
@@ -104,6 +71,26 @@ class BlogController {
         $deleteSuccessful = Blog::delete($id);
         if ($deleteSuccessful) {
             Router::redirect('/blogs');
+        }
+    }
+
+    private function storeTags($id, $tags): void
+    {
+        if (count($tags) > 0) {
+            foreach ($tags as $tag) {
+                if (strlen(trim($tag)) === 0) continue;
+                $storedTags = Tag::select([
+                    ['LOWER(name)', 'LIKE', strtolower($tag)],
+                ]);
+
+                if (count($storedTags) > 0) {
+                    $tagId = $storedTags[0]->id;
+                } else {
+                    $tagId = Tag::create(['name' => $tag]);
+                }
+                $query = Database::getInstance()->prepare("INSERT INTO blog_tag VALUES (?, ?)");
+                $query->execute([$id, $tagId]);
+            }
         }
     }
 }

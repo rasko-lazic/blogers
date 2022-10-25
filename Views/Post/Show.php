@@ -109,7 +109,7 @@ $comments = $comments ?? [];
     <?php foreach ($comments as $comment) :?>
       <li class="comment-list__card">
         <div class="is-flex is-align-items-center mb-4">
-          <img class="comment-list__avatar" src="/assets/image/avatar.png" alt="user avatar">
+          <img class="comment-list__avatar" src="https://picsum.photos/seed/<?= $comment->user->id ?>/100?random=<?= $comment->user->id ?>" alt="user avatar">
           <div class="is-flex-grow-1">
             <p><?= "{$comment->user->firstName} {$comment->user->lastName}" ?></p>
             <p class="has-text-grey-light"><?= $comment->createdAt ?></p>
@@ -117,7 +117,14 @@ $comments = $comments ?? [];
         </div>
         <p class="mb-2"><?= $comment->text ?></p>
         <span class="is-inline-flex is-align-items-center mb-2">
-          <span class="material-icons-outlined is-size-3 is-clickable mr-2">favorite_border</span> 23
+          <?php if (\Core\Session::check()) :?>
+            <form action="/comments/favorite/<?= $comment->id ?>" method="POST">
+              <button class="material-icons-outlined is-size-3 mr-2 is-clickable <?= $comment->isFavorite ? 'is-favorite' : '' ?>">
+                <?= $comment->isFavorite ? 'favorite' : 'favorite_border' ?>
+              </button>
+            </form>
+            <span><?= $comment->favoriteCount ?></span>
+          <?php endif ?>
         </span>
       </li>
     <?php endforeach ?>
@@ -137,21 +144,23 @@ $comments = $comments ?? [];
 
   // Restore scroll position after favorite toggle
   document.addEventListener("DOMContentLoaded", () => {
-    let scrollPosition = localStorage.getItem('scrollPosition');
+    let scrollPosition = localStorage.getItem('scrollPositionPost');
     if (scrollPosition) {
       window.scrollTo(0, +scrollPosition);
     }
   });
 
   window.onbeforeunload = function() {
-    localStorage.setItem('scrollPosition', String(window.scrollY));
+    localStorage.setItem('scrollPositionPost', String(window.scrollY));
   };
 
   $(document).ready(() => {
 
     // If we are redirected after comment store, open comment sidebar
     if (window.location.hash && window.location.hash === '#comments') {
+      $("#sidebar").addClass("disable-transition");
       $("#sidebar").addClass("sidebar_active");
+      setTimeout(() => $("#sidebar").toggleClass("disable-transition"), 100);
     }
 
     let fastAccess = $("#fast-access");

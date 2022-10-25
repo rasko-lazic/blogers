@@ -12,7 +12,7 @@ class HomeController {
 
     public function index(Request $request): void
     {
-        $tags = array_slice(Tag::select([]), 0, 10);
+        $tags = (new Tag())->runQuery('SELECT * FROM tags ORDER BY id DESC LIMIT 10', []);
         $topPosts = (new Post())->runQuery('SELECT * FROM posts WHERE is_draft = 0 ORDER BY RAND() LIMIT 6', []);
 
         $requestedTag = $request->get('tag', null);

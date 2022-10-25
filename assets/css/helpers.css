@@ -5,3 +5,7 @@
 .color-inherit {
     color: inherit;
 }
+
+.disable-transition {
+    transition: none !important;
+}

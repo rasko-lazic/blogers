@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Core\Database;
 use Core\Model;
+use Core\Session;
 
 class Comment extends Model {
 
@@ -14,6 +15,7 @@ class Comment extends Model {
     public $postId;
     public $post;
     public $text;
+    public $isFavorite;
     public $favoriteCount;
     public $createdAt;
     public $updatedAt;
@@ -26,6 +28,13 @@ class Comment extends Model {
     private function getPost($id): ?Post
     {
         return Post::fetchById($id);
+    }
+
+    private function getIsFavorite($commentId): bool
+    {
+        $query = Database::getInstance()->prepare('SELECT EXISTS (SELECT * FROM entity_like WHERE entity_id = :commentId AND user_id = :userId)');
+        $query->execute(['commentId' => $commentId, 'userId' => Session::getUserId()]);
+        return array_values($query->fetch())[0] ?? false;
     }
 
     private function getFavoriteCount($commentId): int
@@ -44,6 +53,7 @@ class Comment extends Model {
             $comment->postId = $row['post_id'];
             $comment->post = $this->getPost($row['post_id']);
             $comment->text = $row['text'];
+            $comment->isFavorite = $this->getIsFavorite($row['id']);
             $comment->favoriteCount = $this->getFavoriteCount($row['id']);
             $comment->createdAt = date('d/m/Y H:i',strtotime($row['created_at']));
             $comment->updatedAt = date('d/m/Y H:i',strtotime($row['updated_at']));
