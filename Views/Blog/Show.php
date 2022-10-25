@@ -29,6 +29,12 @@ $publishedPosts = $publishedPosts ?? [];
       </ul>
     </div>
     <section id="draft-section" class="section tab-body is-active">
+      <?php if (count($draftPosts) === 0) :?>
+        <div class="has-text-centered">
+          <img class="no-data_image" alt="placeholder" src="/assets/image/placeholder.png" />
+          <p class="is-size-3">Izgleda da ovde nema ničega, za sad</p>
+        </div>
+      <?php endif ?>
       <ul class="post-list mb-6">
         <?php foreach ($draftPosts as $draftPost) :?>
           <li>
@@ -73,34 +79,40 @@ $publishedPosts = $publishedPosts ?? [];
 <!--      </div>-->
     </section>
     <section id="published-section" class="section tab-body">
+      <?php if (count($publishedPosts) === 0) :?>
+        <div class="has-text-centered">
+          <img class="no-data_image" alt="placeholder" src="/assets/image/placeholder.png" />
+          <p class="is-size-3">Izgleda da ovde nema ničega, za sad</p>
+        </div>
+      <?php endif ?>
       <ul class="post-list mb-6">
-          <?php foreach ($publishedPosts as $publishedPost) :?>
-            <li>
-              <div class="is-flex-grow-1">
-                <a class="title is-5 is-block" href="/<?= $publishedPost->slug ?>" target="_blank">
-                    <?= $publishedPost->title ?>
-                </a>
-                <h4 class="subtitle is-6"><?= strtok($publishedPost->text,  '.') ?></h4>
-                <p class="is-size-7">
-                  Poslednji put izmenjeno: <?= $publishedPost->createdAt ?>. <?= str_word_count($publishedPost->text) ?> reči do sad.
-                </p>
-              </div>
-              <div class="is-flex-shrink-0">
-                <form class="is-inline-block mr-2" action="/posts/draft/<?= $publishedPost->id ?>" method="POST">
-                  <input type="hidden" name="_method" value="PUT" />
-                  <input type="hidden" name="isDraft" value="1" />
-                  <button class="material-icons-outlined is-clickable" title="Sakrij">hide_source</button>
-                </form>
-                <a class="material-icons-outlined mr-2 c-inherit is-clickable" href="/posts/<?= $publishedPost->id ?>">edit</a>
-                <button class="material-icons-outlined mr-2 is-clickable" type="submit" form="post-delete-<?= $publishedPost->id ?>">
-                  delete_outline
-                </button>
-              </div>
-              <form id="post-delete-<?= $publishedPost->id ?>" action="/posts/<?= $publishedPost->id ?>" method="POST">
-                <input type="hidden" name="_method" value="DELETE">
+        <?php foreach ($publishedPosts as $publishedPost) :?>
+          <li>
+            <div class="is-flex-grow-1">
+              <a class="title is-5 is-block" href="/<?= $publishedPost->slug ?>" target="_blank">
+                  <?= $publishedPost->title ?>
+              </a>
+              <h4 class="subtitle is-6"><?= strtok($publishedPost->text,  '.') ?></h4>
+              <p class="is-size-7">
+                Poslednji put izmenjeno: <?= $publishedPost->createdAt ?>. <?= str_word_count($publishedPost->text) ?> reči do sad.
+              </p>
+            </div>
+            <div class="is-flex-shrink-0">
+              <form class="is-inline-block mr-2" action="/posts/draft/<?= $publishedPost->id ?>" method="POST">
+                <input type="hidden" name="_method" value="PUT" />
+                <input type="hidden" name="isDraft" value="1" />
+                <button class="material-icons-outlined is-clickable" title="Sakrij">hide_source</button>
               </form>
-            </li>
-          <?php endforeach ?>
+              <a class="material-icons-outlined mr-2 c-inherit is-clickable" href="/posts/<?= $publishedPost->id ?>">edit</a>
+              <button class="material-icons-outlined mr-2 is-clickable" type="submit" form="post-delete-<?= $publishedPost->id ?>">
+                delete_outline
+              </button>
+            </div>
+            <form id="post-delete-<?= $publishedPost->id ?>" action="/posts/<?= $publishedPost->id ?>" method="POST">
+              <input type="hidden" name="_method" value="DELETE">
+            </form>
+          </li>
+        <?php endforeach ?>
       </ul>
 <!--      <div class="pagination is-centered" role="navigation" aria-label="pagination">-->
 <!--        <a class="pagination-previous">Previous</a>-->

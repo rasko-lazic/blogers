@@ -10,6 +10,12 @@ $blogs = $blogs ?? [];
 <?php include("./Views/Partials/Navigation.php") ?>
 <section class="section">
   <div class="container">
+    <?php if (count($blogs) === 0) :?>
+      <div class="has-text-centered">
+        <img class="no-data_image" alt="placeholder" src="/assets/image/placeholder.png" />
+        <p class="is-size-3">Izgleda da ovde nema ničega, za sad</p>
+      </div>
+    <?php endif ?>
     <?php foreach ($blogs as $blog) :?>
       <div class="blog-line">
         <img id="blog-logo-<?= $blog->id ?>" class="blog-line__logo" src="https://picsum.photos/seed/<?= $blog->id ?>/100?blur=2&random=<?= $blog->id ?>" alt="blog_logo" />

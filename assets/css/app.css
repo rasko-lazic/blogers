@@ -453,3 +453,10 @@ button.material-icons-outlined {
 .image-card .file.is-boxed .file-cta {
     padding: 1rem;
 }
+
+.no-data_image {
+    height: 25rem;
+    width: auto;
+    opacity: 0.6;
+    filter: grayscale(50%);
+}
