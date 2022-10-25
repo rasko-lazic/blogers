@@ -1,6 +1,6 @@
 <?php
 // Initialize view variables
-$blogId = $blogId ?? 0;
+$post = $post ?? null;
 $images = $images ?? [];
 ?>
 
@@ -20,17 +20,15 @@ $images = $images ?? [];
       <button id="image-button" class="button is-info is-rounded is-outlined mr-2">
         Dodaj sliku
       </button>
-      <button class="button is-info is-rounded is-outlined mr-2" type="submit" formaction="/blogs/<?= $blogId ?>/posts" form="post-form">
-        Sačuvaj nacrt
-      </button>
-      <button class="button is-success is-rounded is-outlined" type="submit" formaction="/blogs/<?= $blogId ?>/publish" form="post-form">
-        Objavi
+      <button class="button is-success is-rounded is-outlined mr-2" type="submit" form="post-form">
+        Sačuvaj
       </button>
     </div>
   </div>
   <div class="container">
     <section class="section">
-      <form class="post-form" id="post-form" method="POST" action="/blogs/<?= $blogId ?>/posts">
+      <form class="post-form" id="post-form" method="POST" action="/posts/<?= $post->id ?>">
+        <input type="hidden" name="_method" value="PUT" />
         <div class="field is-horizontal">
 <!--          <div class="field-label is-large">-->
 <!--            <label class="label" for="title">Naslov</label>-->
@@ -44,6 +42,7 @@ $images = $images ?? [];
                   type="text"
                   name="title"
                   placeholder="Naslov"
+                  value="<?= $post->title ?>"
                   autofocus
                 />
               </p>
@@ -57,7 +56,7 @@ $images = $images ?? [];
               name="content"
               placeholder="Tvoja priča"
               rows="22"
-            ></textarea>
+            ><?= $post->text ?></textarea>
           </div>
         </div>
       </form>
@@ -133,7 +132,7 @@ $images = $images ?? [];
           <form id="image-form" enctype="multipart/form-data" action="/images" method="POST">
             <!--Frontend validation for max image size, in bytes-->
             <input type="hidden" name="MAX_FILE_SIZE" value="5000000" />
-            <input type="hidden" name="blog" value="<?= $blogId ?>">
+            <input type="hidden" name="blog" value="<?= $post->blogId ?>">
             <label class="file-label">
               <input id="image-input" class="file-input" type="file" name="images[]" multiple accept="image/*">
               <span class="file-cta">

@@ -44,7 +44,10 @@ class Router {
             'POST:/login' => [AuthController::class, 'login'],
             'GET:/logout' => [AuthController::class, 'logout'],
             'POST:/posts/favorite/*' => [PostController::class, 'favorite'],
+            'PUT:/posts/draft/*' => [PostController::class, 'draft'],
             'POST:/posts/*/comments' => [CommentController::class, 'store'],
+            'GET:/posts/*' => [PostController::class, 'edit'],
+            'PUT:/posts/*' => [PostController::class, 'update'],
             'POST:/comments/favorite/*' => [CommentController::class, 'favorite'],
             'DELETE:/posts/*' => [PostController::class, 'destroy'],
             'GET:/admin' => [AdminController::class, 'index'],
@@ -60,6 +63,7 @@ class Router {
             'DELETE:/blogs/*' => [BlogController::class, 'destroy'],
             'POST:/images' => [ImageController::class, 'store'],
             'POST:/blogs/*/posts' => [PostController::class, 'store'],
+            'POST:/blogs/*/publish' => [PostController::class, 'publish'],
             'GET:/*' => [PostController::class, 'show'],
         ];
     }

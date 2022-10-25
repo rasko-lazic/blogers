@@ -36,12 +36,18 @@ $publishedPosts = $publishedPosts ?? [];
               <a class="title is-5 is-block" href="/<?= $draftPost->slug ?>" target="_blank">
                 <?= $draftPost->title ?>
               </a>
-              <h4 class="subtitle is-6">Ovo je podnaslov, malo duzi, prva recenica teksta</h4>
-              <p class="is-size-7">Poslednji put izmenjeno pre 14 minuta. 124 reči do sad.</p>
+              <h4 class="subtitle is-6"><?= strtok($draftPost->text,  '.') ?></h4>
+              <p class="is-size-7">
+                Poslednji put izmenjeno: <?= $draftPost->createdAt ?>. <?= str_word_count($draftPost->text) ?> reči do sad.
+              </p>
             </div>
-            <div>
-              <span class="material-icons-outlined mr-2 is-clickable">published_with_changes</span>
-              <span class="material-icons-outlined mr-2 is-clickable">edit</span>
+            <div class="is-flex-shrink-0">
+              <form class="is-inline-block mr-2" action="/posts/draft/<?= $draftPost->id ?>" method="POST">
+                <input type="hidden" name="_method" value="PUT" />
+                <input type="hidden" name="isDraft" value="0" />
+                <button class="material-icons-outlined is-clickable" title="Objavi">published_with_changes</button>
+              </form>
+              <a class="material-icons-outlined mr-2 c-inherit is-clickable" href="/posts/<?= $draftPost->id ?>">edit</a>
               <button class="material-icons-outlined mr-2 is-clickable" type="submit" form="post-delete-<?= $draftPost->id ?>">
                 delete_outline
               </button>
@@ -74,12 +80,18 @@ $publishedPosts = $publishedPosts ?? [];
                 <a class="title is-5 is-block" href="/<?= $publishedPost->slug ?>" target="_blank">
                     <?= $publishedPost->title ?>
                 </a>
-                <h4 class="subtitle is-6">Ovo je podnaslov, malo duzi, prva recenica teksta</h4>
-                <p class="is-size-7">Poslednji put izmenjeno pre 14 minuta. 124 reči do sad.</p>
+                <h4 class="subtitle is-6"><?= strtok($publishedPost->text,  '.') ?></h4>
+                <p class="is-size-7">
+                  Poslednji put izmenjeno: <?= $publishedPost->createdAt ?>. <?= str_word_count($publishedPost->text) ?> reči do sad.
+                </p>
               </div>
-              <div>
-                <span class="material-icons-outlined mr-2 is-clickable">published_with_changes</span>
-                <span class="material-icons-outlined mr-2 is-clickable">edit</span>
+              <div class="is-flex-shrink-0">
+                <form class="is-inline-block mr-2" action="/posts/draft/<?= $publishedPost->id ?>" method="POST">
+                  <input type="hidden" name="_method" value="PUT" />
+                  <input type="hidden" name="isDraft" value="1" />
+                  <button class="material-icons-outlined is-clickable" title="Sakrij">hide_source</button>
+                </form>
+                <a class="material-icons-outlined mr-2 c-inherit is-clickable" href="/posts/<?= $publishedPost->id ?>">edit</a>
                 <button class="material-icons-outlined mr-2 is-clickable" type="submit" form="post-delete-<?= $publishedPost->id ?>">
                   delete_outline
                 </button>
